@@ -1,0 +1,703 @@
+﻿
+@{
+    ViewBag.Title = "UpdateUsers";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Update Customer</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+
+
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        .modal-confirm {
+            font-size: 14px;
+        }
+
+            .modal-confirm .modal-content {
+                padding: 20px;
+                border-radius: 5px;
+                border: none;
+            }
+
+            .modal-confirm .modal-header {
+                border-bottom: none;
+                position: relative;
+            }
+
+            .modal-confirm h4 {
+                text-align: center;
+                font-size: 26px;
+                margin: 30px 0 -15px;
+            }
+
+            .modal-confirm .form-control,
+            .modal-confirm .btn {
+                min-height: 40px;
+                border-radius: 3px;
+            }
+
+            .modal-confirm .close {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+            }
+
+            .modal-confirm .modal-footer {
+                border: none;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 13px;
+            }
+
+            .modal-confirm .icon-box {
+                position: absolute;
+                margin: 0 auto;
+                left: 0;
+                right: 0;
+                top: -70px;
+                width: 95px;
+                height: 95px;
+                border-radius: 50%;
+                z-index: 9;
+                background: #82ce34;
+                padding: 15px;
+                text-align: center;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+            }
+
+                .modal-confirm .icon-box i {
+                    font-size: 58px;
+                    position: relative;
+                    top: 3px;
+                }
+
+            .modal-confirm.modal-dialog {
+                margin-top: 80px;
+            }
+
+            .modal-confirm .btn {
+                border-radius: 4px;
+                text-decoration: none;
+                transition: all 0.4s;
+                line-height: normal;
+                border: none;
+            }
+
+                .modal-confirm .btn:hover,
+                .modal-confirm .btn:focus {
+                    background: #6fb32b;
+                    outline: none;
+                }
+
+        .filepond--drop-label {
+            color: #4c4e53;
+        }
+
+        .filepond--label-action {
+            text-decoration-color: #babdc0;
+        }
+
+        .filepond--panel-root {
+            background-color: #edf0f4;
+        }
+
+        .filepond--root {
+            width: 170px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_AdminPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_AdminNavbar")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_AdminSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Customer</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Update Customer</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- SELECT2 EXAMPLE -->
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Update Customer</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form id="quickForm">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="form-group col-md-5">
+                                            <label for="exampleInputAddress1">Customer Image</label>
+
+                                            <input type="file" class="filepond" name="filepond" accept="image/png, image/jpeg, image/gif" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputFirstName1">First Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="firstName" class="form-control" id="exampleInputFirstName1" placeholder="Enter First Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputLastName1">Last Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="lastName" class="form-control" id="exampleInputLastName1" placeholder="PassEnter Last Name">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputPhone1">Phone: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputPhone1" name="phone" class="form-control" placeholder="Enter Phone" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputMobile1">Mobile: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-mobile"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputMobile1" name="mobile" class="form-control" placeholder="Enter Mobile" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Email: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                </div>
+                                                <input type="email" id="exampleInputEmail1" name="email" class="form-control" placeholder="Enter Email">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputPassword1">Mobile: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                </div>
+                                                <input type="password" id="exampleInputPassword1" name="password" class="form-control" placeholder="Enter Password">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputUserName1">UserName: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputUserName1" name="userName" class="form-control" placeholder="Enter User Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputReferFrom1">Refer From: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user-plus"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputReferFrom1" name="referFrom" class="form-control" placeholder="Enter Refer From">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputUSerType1">User Type</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                                </div>
+                                                <select class="form-control select2bs4" name="userType" id="exampleInputUSerType1" style="width: 80%;">
+                                                    <option selected="selected">Broker</option>
+                                                    <option>Client</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputCountry1">Country</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                                </div>
+                                                <select class="form-control select2bs4" name="country" id="exampleInputCountry1" style="width: 80%;">
+                                                    <option selected="selected">Alabama</option>
+                                                    <option>Alaska</option>
+                                                    <option>California</option>
+                                                    <option>Delaware</option>
+                                                    <option>Tennessee</option>
+                                                    <option>Texas</option>
+                                                    <option>Washington</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleInputAddress1">Address</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                </div>
+                                                <textarea class="form-control" id="exampleInputAddress1" rows="2" placeholder="Enter Address..."></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-0">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
+                                            <label class="custom-control-label" for="exampleCheck1">I agree to the <a href="#">terms of service</a>.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Update Customer</button>
+                                </div>
+                            </form>
+
+                            <div id="myModal1" class="modal fade">
+                                <div class="modal-dialog modal-confirm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="icon-box">
+                                                <i class="fa fa-pen"></i>
+                                            </div>
+                                            <h4 class="modal-title w-100">Confirmation</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-center">Are You sure You want to update.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-primary btn-block" id="SubForm" data-dismiss="modal">Sure, Update It</button>
+                                            <button class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+                            the plugin.
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_AdminFooter")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+
+
+    @{ var imageNameQWE = "../../dist/img/user2-160x160.jpg"; }}
+
+
+
+
+
+    <script>
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginImageExifOrientation,
+            FilePondPluginImagePreview,
+            FilePondPluginImageCrop,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform,
+            FilePondPluginImageEdit
+        );
+
+        // Select the file input and use
+        // create() to turn it into a pond
+        // FilePond.create(
+        //     document.querySelector('.filepond'), {
+        //         labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+        //         imagePreviewHeight: 170,
+        //         imageCropAspectRatio: '1:1',
+        //         imageResizeTargetWidth: 200,
+        //         imageResizeTargetHeight: 200,
+        //         stylePanelLayout: 'compact circle',
+        //         styleLoadIndicatorPosition: 'center bottom',
+        //         styleProgressIndicatorPosition: 'right bottom',
+        //         styleButtonRemoveItemPosition: 'left bottom',
+        //         styleButtonProcessItemPosition: 'right bottom',
+        //     }
+        // );
+
+        // var imagen = '{{ trim($marca->imagen_asociada) }}'
+        // const inputElement = document.querySelector('input[type="file"]');
+
+        // FilePond.setOptions({
+        //     server: {
+        //         load: imagen.replace('/images/button/', '')
+        //     }
+        // });
+        const pond = FilePond.create(document.querySelector('.filepond'), {
+            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+            imagePreviewHeight: 170,
+            imageCropAspectRatio: '1:1',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 200,
+            stylePanelLayout: 'compact circle',
+            styleLoadIndicatorPosition: 'center bottom',
+            styleProgressIndicatorPosition: 'right bottom',
+            styleButtonRemoveItemPosition: 'left bottom',
+            styleButtonProcessItemPosition: 'right bottom',
+            files: [{
+                source: '@imageNameQWE'
+            }]
+        });
+
+
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function(params) {
+                    var term = $.trim(params.term);
+
+                    if (term === '') {
+                        return null;
+                    }
+
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true // add additional parameters
+                    }
+                }
+            })
+
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+
+
+            //Datemask dd/mm/yyyy
+            $('#datemask').inputmask('dd/mm/yyyy', {
+                'placeholder': 'dd/mm/yyyy'
+            })
+            //Datemask2 mm/dd/yyyy
+            $('#datemask2').inputmask('mm/dd/yyyy', {
+                'placeholder': 'mm/dd/yyyy'
+            })
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+            //Date picker
+            $('#reservationdate').datetimepicker({
+                format: 'L'
+            });
+
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
+
+            //Date range picker
+            $('#reservation').daterangepicker()
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                }
+            })
+            //Date range as a button
+            $('#daterange-btn').daterangepicker({
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function(start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+            )
+
+            //Timepicker
+            $('#timepicker').datetimepicker({
+                format: 'LT'
+            })
+
+            //Bootstrap Duallistbox
+            $('.duallistbox').bootstrapDualListbox()
+
+            //Colorpicker
+            $('.my-colorpicker1').colorpicker()
+            //color picker with addon
+            $('.my-colorpicker2').colorpicker()
+
+            $('.my-colorpicker2').on('colorpickerChange', function(event) {
+                $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+            })
+
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
+
+        })
+        // // BS-Stepper Init
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        // })
+
+        // // DropzoneJS Demo Code Start
+        // Dropzone.autoDiscover = false
+
+        // // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        // var previewNode = document.querySelector("#template")
+        // previewNode.id = ""
+        // var previewTemplate = previewNode.parentNode.innerHTML
+        // previewNode.parentNode.removeChild(previewNode)
+
+        // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        //     url: "/target-url", // Set the url
+        //     thumbnailWidth: 80,
+        //     thumbnailHeight: 80,
+        //     parallelUploads: 20,
+        //     previewTemplate: previewTemplate,
+        //     autoQueue: false, // Make sure the files aren't queued until manually added
+        //     previewsContainer: "#previews", // Define the container to display the previews
+        //     clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+        // })
+
+        // myDropzone.on("addedfile", function(file) {
+        //     // Hookup the start button
+        //     file.previewElement.querySelector(".start").onclick = function() {
+        //         myDropzone.enqueueFile(file)
+        //     }
+        // })
+
+        // // Update the total progress bar
+        // myDropzone.on("totaluploadprogress", function(progress) {
+        //     document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+        // })
+
+        // myDropzone.on("sending", function(file) {
+        //     // Show the total progress bar when upload starts
+        //     document.querySelector("#total-progress").style.opacity = "1"
+        //     // And disable the start button
+        //     file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+        // })
+
+        // // Hide the total progress bar when nothing's uploading anymore
+        // myDropzone.on("queuecomplete", function(progress) {
+        //     document.querySelector("#total-progress").style.opacity = "0"
+        // })
+
+        // // Setup the buttons for all transfers
+        // // The "add files" button doesn't need to be setup because the config
+        // // `clickable` has already been specified.
+        // document.querySelector("#actions .start").onclick = function() {
+        //     myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+        // }
+        // document.querySelector("#actions .cancel").onclick = function() {
+        //     myDropzone.removeAllFiles(true)
+        // }
+
+
+
+        // DropzoneJS Demo Code End
+    </script>
+
+
+    <script>
+        $(function() {
+            $.validator.setDefaults({
+                submitHandler: function(form) {
+                    $("#myModal1").modal('show');
+                    $('#SubForm').click(function() {
+                        form.submit();
+                    });
+                }
+            });
+            $('#quickForm').validate({
+                rules: {
+                    firstName: {
+                        required: true,
+                    },
+                    filepond: {
+                        required: true,
+                    },
+                    lastName: {
+                        required: true,
+                    },
+                    userName: {
+                        required: true,
+                    },
+                    referFrom: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    },
+                    terms: {
+                        required: true
+                    },
+                },
+                messages: {
+
+                    filepond: {
+                        required: "Please enter a user image",
+                    },
+                    firstName: {
+                        required: "Please enter a first name",
+                    },
+                    lastName: {
+                        required: "Please enter a last name",
+                    },
+                    userName: {
+                        required: "Please enter a user name",
+                    },
+                    referFrom: {
+                        required: "Please enter a referer name",
+                    },
+                    email: {
+                        required: "Please enter a email address",
+                        email: "Please enter a vaild email address"
+                    },
+                    password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 5 characters long"
+                    },
+                    terms: "Please accept our terms"
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

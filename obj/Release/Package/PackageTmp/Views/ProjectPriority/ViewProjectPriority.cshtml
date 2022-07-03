@@ -1,0 +1,272 @@
+﻿@model PMS.Models.ProjectPriority
+@{
+    ViewBag.Title = "View Project Priority";
+    ViewBag.Page = "Project Priority";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | @ViewBag.Title</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+    <style>
+        .modal-confirm {
+            font-size: 14px;
+        }
+
+            .modal-confirm .modal-content {
+                padding: 20px;
+                border-radius: 5px;
+                border: none;
+            }
+
+            .modal-confirm .modal-header {
+                border-bottom: none;
+                position: relative;
+            }
+
+            .modal-confirm h4 {
+                text-align: center;
+                font-size: 26px;
+                margin: 30px 0 -15px;
+            }
+
+            .modal-confirm .form-control,
+            .modal-confirm .btn {
+                min-height: 40px;
+                border-radius: 3px;
+            }
+
+            .modal-confirm .close {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+            }
+
+            .modal-confirm .modal-footer {
+                border: none;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 13px;
+            }
+
+            .modal-confirm .icon-box {
+                position: absolute;
+                margin: 0 auto;
+                left: 0;
+                right: 0;
+                top: -70px;
+                width: 95px;
+                height: 95px;
+                border-radius: 50%;
+                z-index: 9;
+                background: #82ce34;
+                padding: 15px;
+                text-align: center;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+            }
+
+                .modal-confirm .icon-box i {
+                    font-size: 58px;
+                    position: relative;
+                    top: 3px;
+                }
+
+            .modal-confirm.modal-dialog {
+                margin-top: 80px;
+            }
+
+            .modal-confirm .btn {
+                border-radius: 4px;
+                text-decoration: none;
+                transition: all 0.4s;
+                line-height: normal;
+                border: none;
+            }
+
+                .modal-confirm .btn:hover,
+                .modal-confirm .btn:focus {
+                    background: #6fb32b;
+                    outline: none;
+                }
+    </style>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_ClientPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_ClientNavbar")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_ClientSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">@ViewBag.Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="~/ProjectPriority/DisplayProjectPriority">Display @ViewBag.Page </a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Title</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- SELECT2 EXAMPLE -->
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">@ViewBag.Title</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form id="quickForm" action="~/ProjectPriority/ViewProjectPriorityData/@Model.Id">
+                                <div class="card-body">
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="examplepriorityname">Project Priority Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-bar-chart"></i></span>
+                                                </div>
+                                                <input type="text" value="@Model.ProjectPriorityName" name="projectpriorityname" class="form-control" id="examplepriorityname" placeholder="Enter Project Priority Name" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="projectprioritypoints">Project Priority Points</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-star"></i></span>
+                                                </div>
+                                                <input type="text" value="@Model.ProjectPriorityPoints" name="projectprioritypoints" class="form-control" id="projectprioritypoints" placeholder="Enter Project Priority Name" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="projectprioritybackgroundcolor">Project Priority Background Color</label>
+
+                                            <div class="input-group my-colorpicker2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-square"></i></span>
+                                                </div>
+
+                                                <input type="text" value="@Model.ProjectPriorityBackGroundColor" name="projectprioritybackgroundcolor" class="form-control" id="projectprioritybackgroundcolor" placeholder="Enter Project Priority Background Color" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="projectprioritytextcolor">Project Priority Text Color</label>
+                                            <div class="input-group my-colorpicker3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-square"></i></span>
+                                                </div>
+                                                <input type="text" value="@Model.ProjectPriorityTextColor" name="projectprioritytextcolor" class="form-control" id="projectprioritytextcolor" placeholder="Enter Project Priority Text Color" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="projectprioritydescription">Project Priority Description</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-tasks"></i></span>
+                                                </div>
+                                                <textarea id="projectprioritydescription" placeholder="Enter Project Priority Description" name="projectprioritydescription" class="form-control" rows="4" readonly>@Model.ProjectPriorityDescription</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+                                <!-- /.card-body -->
+                                                           </form>
+                            <div id="myModal1" class="modal fade">
+                                <div class="modal-dialog modal-confirm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="icon-box">
+                                                <i class="fa fa-pen"></i>
+                                            </div>
+                                            <h4 class="modal-title w-100">Confirmation</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-center">Are You sure You want to update.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-primary btn-block" id="SubForm" data-dismiss="modal">Sure, View It</button>
+                                            <button class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @Html.Partial("_ClientAddUpdateViewCardFooter")
+                            
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_ClientFooter")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+
+</body>
+
+</html>

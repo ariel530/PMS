@@ -1,0 +1,522 @@
+﻿
+@model PMS.DynamicBindingModels.User_Country_UserType_AddUpdate
+@{
+    ViewBag.Title = "View Users";
+    ViewBag.Page = "Users";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | @ViewBag.Title</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+
+    <style>
+      
+
+
+        .filepond--drop-label {
+            color: #4c4e53;
+        }
+
+        .filepond--label-action {
+            text-decoration-color: #babdc0;
+        }
+
+        .filepond--panel-root {
+            background-color: #edf0f4;
+        }
+
+        .filepond--root {
+            width: 170px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_AdminPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_AdminNavbar")
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_AdminSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">@ViewBag.Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="~/Users/DisplayUsers">Display Users Data</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Title</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+
+                  
+
+                    <!-- SELECT2 EXAMPLE -->
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">@ViewBag.Title</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form id="quickForm" action="InsertUserInfoData" method="post" enctype="multipart/form-data">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="form-group col-md-5">
+                                            <label for="exampleInputAddress1">User Image</label>
+
+                                            <input type="file" class="filepond" name="filepond" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputFirstName1">First Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="firstName" value="@Model.UserInfoData.FirstName" class="form-control" id="exampleInputFirstName1" placeholder="Enter First Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputLastName1">Last Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="lastName" class="form-control" value="@Model.UserInfoData.LastName" id="exampleInputLastName1" placeholder="PassEnter Last Name">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputPhone1">Phone: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputPhone1" value="@Model.UserInfoData.PhoneNumber" name="phone" class="form-control" placeholder="Enter Phone" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputMobile1">Mobile: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-mobile"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputMobile1" name="mobile" value="@Model.UserInfoData.MobileNumber" class="form-control" placeholder="Enter Mobile" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Email: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                </div>
+                                                <input type="email" id="exampleInputEmail1" name="email" value="@Model.UserInfoData.Email" class="form-control" placeholder="Enter Email" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputPassword1">Password: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                </div>
+                                                <input type="password" id="exampleInputPassword1" name="password" value="@Model.UserInfoData.Password" class="form-control" placeholder="Enter Password">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputUserName1">UserName: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputUserName1" name="userName" value="@Model.UserInfoData.UserName" class="form-control" placeholder="Enter User Name" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputAddress1">Address</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                </div>
+                                                <textarea class="form-control" id="exampleInputAddress1" rows="1" name="address" placeholder="Enter Address...">@Model.UserInfoData.Address</textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputUSerType1">User Type</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                                </div>
+                                                <select class="form-control usertype" name="userType" id="exampleInputUSerType1" style="width: 80%;">
+
+                                                    @foreach (var userType in Model.userType)
+                                                    {
+                                                        if (userType.Id == Model.UserInfoData.UserType)
+                                                        {
+                                                            <option value="@userType.Id">@userType.UserTypeName</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputCountry1">Country</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                                </div>
+                                                <select class="form-control custom-select select2bs4" name="country" id="exampleInputCountry1" style="width: 80%;">
+                                                    @foreach (var country in Model.country)
+                                                    {
+                                                        if (country.CountryCode == Model.UserInfoData.CountryCode)
+                                                        {
+                                                            <option value="@country.CountryCode" selected="selected">@country.CountryName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                </div>
+                                <!-- /.card-body -->
+                            </form>
+                 
+
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                           @Html.Partial("_ClientAddUpdateViewCardFooter")
+                            
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_AdminFooter")
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+
+
+
+
+
+
+
+    <script>
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginImageExifOrientation,
+            FilePondPluginImagePreview,
+            FilePondPluginImageCrop,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform,
+            FilePondPluginImageEdit
+        );
+
+        // Select the file input and use
+        // create() to turn it into a pond
+        // FilePond.create(
+        //     document.querySelector('.filepond'), {
+        //         labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+        //         imagePreviewHeight: 170,
+        //         imageCropAspectRatio: '1:1',
+        //         imageResizeTargetWidth: 200,
+        //         imageResizeTargetHeight: 200,
+        //         stylePanelLayout: 'compact circle',
+        //         styleLoadIndicatorPosition: 'center bottom',
+        //         styleProgressIndicatorPosition: 'right bottom',
+        //         styleButtonRemoveItemPosition: 'left bottom',
+        //         styleButtonProcessItemPosition: 'right bottom',
+        //     }
+        // );
+
+        // var imagen = '{{ trim($marca->imagen_asociada) }}'
+        // const inputElement = document.querySelector('input[type="file"]');
+
+        // FilePond.setOptions({
+        //     server: {
+        //         load: imagen.replace('/images/button/', '')
+        //     }
+        // });
+        const pond = FilePond.create(document.querySelector('.filepond'), {
+            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+            imagePreviewHeight: 170,
+            imageCropAspectRatio: '1:1',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 200,
+            stylePanelLayout: 'compact circle',
+            styleLoadIndicatorPosition: 'center bottom',
+            styleProgressIndicatorPosition: 'right bottom',
+            styleButtonRemoveItemPosition: 'left bottom',
+            styleButtonProcessItemPosition: 'right bottom',
+             files: [{
+                 source: '/UserImages/@Model.UserInfoData.ImagePath'
+            }]
+        });
+
+
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function(params) {
+                    var term = $.trim(params.term);
+
+                    if (term === '') {
+                        return null;
+                    }
+
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true // add additional parameters
+                    }
+                }
+            })
+
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('.usertype').select2({
+                theme: 'bootstrap4'
+            })
+
+
+
+            //Datemask dd/mm/yyyy
+            $('#datemask').inputmask('dd/mm/yyyy', {
+                'placeholder': 'dd/mm/yyyy'
+            })
+            //Datemask2 mm/dd/yyyy
+            $('#datemask2').inputmask('mm/dd/yyyy', {
+                'placeholder': 'mm/dd/yyyy'
+            })
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+            //Date picker
+            $('#reservationdate').datetimepicker({
+                format: 'L'
+            });
+
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
+
+            //Date range picker
+            $('#reservation').daterangepicker()
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                }
+            })
+            //Date range as a button
+            $('#daterange-btn').daterangepicker({
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function(start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+            )
+
+            //Timepicker
+            $('#timepicker').datetimepicker({
+                format: 'LT'
+            })
+
+            //Bootstrap Duallistbox
+            $('.duallistbox').bootstrapDualListbox()
+
+            //Colorpicker
+            $('.my-colorpicker1').colorpicker()
+            //color picker with addon
+            $('.my-colorpicker2').colorpicker()
+
+            $('.my-colorpicker2').on('colorpickerChange', function(event) {
+                $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+            })
+
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
+
+        })
+        // // BS-Stepper Init
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        // })
+
+        // // DropzoneJS Demo Code Start
+        // Dropzone.autoDiscover = false
+
+        // // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        // var previewNode = document.querySelector("#template")
+        // previewNode.id = ""
+        // var previewTemplate = previewNode.parentNode.innerHTML
+        // previewNode.parentNode.removeChild(previewNode)
+
+        // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        //     url: "/target-url", // Set the url
+        //     thumbnailWidth: 80,
+        //     thumbnailHeight: 80,
+        //     parallelUploads: 20,
+        //     previewTemplate: previewTemplate,
+        //     autoQueue: false, // Make sure the files aren't queued until manually added
+        //     previewsContainer: "#previews", // Define the container to display the previews
+        //     clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+        // })
+
+        // myDropzone.on("addedfile", function(file) {
+        //     // Hookup the start button
+        //     file.previewElement.querySelector(".start").onclick = function() {
+        //         myDropzone.enqueueFile(file)
+        //     }
+        // })
+
+        // // Update the total progress bar
+        // myDropzone.on("totaluploadprogress", function(progress) {
+        //     document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+        // })
+
+        // myDropzone.on("sending", function(file) {
+        //     // Show the total progress bar when upload starts
+        //     document.querySelector("#total-progress").style.opacity = "1"
+        //     // And disable the start button
+        //     file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+        // })
+
+        // // Hide the total progress bar when nothing's uploading anymore
+        // myDropzone.on("queuecomplete", function(progress) {
+        //     document.querySelector("#total-progress").style.opacity = "0"
+        // })
+
+        // // Setup the buttons for all transfers
+        // // The "add files" button doesn't need to be setup because the config
+        // // `clickable` has already been specified.
+        // document.querySelector("#actions .start").onclick = function() {
+        //     myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+        // }
+        // document.querySelector("#actions .cancel").onclick = function() {
+        //     myDropzone.removeAllFiles(true)
+        // }
+
+
+
+        // DropzoneJS Demo Code End
+
+    </script>
+    <script>
+@*FilePond.setOptions({
+server: '@Url.Action("SaveFile", "Users")'
+});*@
+    </script>
+
+
+</body>
+
+</html>

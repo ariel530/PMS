@@ -1,0 +1,827 @@
+﻿@model IEnumerable<PMS.DynamicBindingModels.Customer_User_Messages_Lists>
+@{
+    ViewBag.Title = "Chat Box";
+    ViewBag.Page = "Customer User Chat Box";
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | @ViewBag.Title</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+    @*<link href="https://onesignal.github.io/emoji-picker/lib/css/emoji.css" />*@
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .logged-in {
+            color: green;
+        }
+
+        .logged-out {
+            color: red;
+        }
+    </style>
+
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_ClientPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_ClientNavbar")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_ClientSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">@ViewBag.Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Title</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+
+
+
+
+
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- SELECT2 EXAMPLE -->
+
+                    @if (TempData["ResultStatus"] != null)
+                    {
+
+                        <div class="alert alert-warning alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-exclamation-triangle"></i>@TempData["ResultMessageTitle"].ToString()</h5>
+                            @TempData["ResultMessage"].ToString()
+                        </div>
+
+                    }
+
+
+
+                    <div class="col-md-12">
+                        <!-- DIRECT CHAT DANGER -->
+                        <div id="mymessagechatbox" class="card card-primary direct-chat direct-chat-primary shadow-lg">
+                            <div class="card-header">
+                                <h3 class="card-title" id="currentUserName">@ViewBag.Page</h3>
+
+                                <div class="card-tools">
+                                    <span title="@ViewBag.UnReadMessagesCount New Messages" id="totalmessagescounter" class="badge bg-danger">@ViewBag.UnReadMessagesCount</span>
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" title="Contacts" id="showcontacts" data-widget="chat-pane-toggle">
+                                        <i class="fas fa-comments"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body ">
+                                <!-- Conversations are loaded here -->
+                                <div class="direct-chat-messages"  id="direct-chat-messages" style="height:400px">
+                                    <!-- Message. Default to the left -->
+                                    <!-- /.direct-chat-msg -->
+                                    <!-- Message to the right -->
+                                    <!-- /.direct-chat-msg -->
+                                </div>
+                                <!--/.direct-chat-messages-->
+                                <!-- Contacts are loaded here -->
+                                <div class="direct-chat-contacts" style="height:400px">
+                                    <ul class="contacts-list" id="mycontactlistusers" style="cursor:pointer">
+
+                                        @*onclick="GetUserMessages('/CustomerImages/@customer_User_Messages_Lists.ImagePath','@customer_User_Messages_Lists.UserName')"*@
+                                        @foreach (PMS.DynamicBindingModels.Customer_User_Messages_Lists customer_User_Messages_Lists in Model)
+                                        {
+
+
+                                            <li style="cursor:pointer" id="@customer_User_Messages_Lists.UserName-contactlistnames" data-imageName="CustomerImages/@customer_User_Messages_Lists.ImagePath" data-userName="@customer_User_Messages_Lists.UserName" class="messageRow">
+                                                <a>
+                                                    <img class="contacts-list-img " data-toggle="modal" data-target="#imageModal" style="height:40px;width:40px;border-radius:50%;" src="~/CustomerImages/@customer_User_Messages_Lists.ImagePath" alt="User Avatar">
+                                                    <div class="contacts-list-info">
+                                                        <span class="contacts-list-name">
+                                                            @customer_User_Messages_Lists.UserName &nbsp;
+                                                            <span id="@customer_User_Messages_Lists.UserName-manageonlinestatus" class="logged-out">●</span>
+                                                            <span id="@customer_User_Messages_Lists.UserName-unreadmessagescount">
+                                                                @if (customer_User_Messages_Lists.UnReadMessages != 0)
+                                                                {
+
+                                                                    <span class="badge badge-warning "> @customer_User_Messages_Lists.UnReadMessages</span>
+                                                                }
+                                                            </span>
+
+                                                            <small class="contacts-list-date float-right" id="@customer_User_Messages_Lists.UserName-lastmessagesenddate">
+                                                                @customer_User_Messages_Lists.SendOn
+                                                            </small>
+                                                        </span>
+                                                        <span class="contacts-list-msg" id="@customer_User_Messages_Lists.UserName-lastmessage">
+                                                            @if (customer_User_Messages_Lists.SendBy.CompareTo(customer_User_Messages_Lists.UserName) != 0 && customer_User_Messages_Lists.SendBy!="") 
+                                                            {
+                                                                if (customer_User_Messages_Lists.IsRead)
+                                                                {
+                                                                    <span id="@customer_User_Messages_Lists.UserName-messagedeliverystatus"><i class="fas fa-check-double text-red"></i> </span>
+                                                                }
+                                                                else if (customer_User_Messages_Lists.IsDelivered)
+                                                                {
+                                                                    <span id="@customer_User_Messages_Lists.UserName-messagedeliverystatus"><i class="fas fa-check-double"></i> </span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span id="@customer_User_Messages_Lists.UserName-messagedeliverystatus"><i class="fas fa-check"></i> </span>
+                                                                }
+                                                            }
+
+                                                            @if (customer_User_Messages_Lists.LastMessage.Length > 20)
+                                                            {
+                                                                string message = customer_User_Messages_Lists.LastMessage.Substring(0, 20) + "...";
+                                                                @message
+
+                                                            }
+
+                                                            else
+                                                            {
+                                                                @customer_User_Messages_Lists.LastMessage
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <!-- /.contacts-list-info -->
+                                                </a>
+                                            </li>
+                                        }
+                                        <!-- End Contact Item -->
+                                    </ul>
+                                    <!-- /.contatcts-list -->
+                                </div>
+                                <!-- /.direct-chat-pane -->
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="message" name="message" data-emoji-input="unicode" data-emojiable="true" placeholder="Type Message ...">
+
+                                    <input type="button" id="sendmessage" class="btn btn-primary col-12 mt-2" value="Send" />
+
+                                </div>
+
+                            </div>
+                            <!-- /.card-footer-->
+                        </div>
+                        <!--/.direct-chat -->
+                    </div>
+
+
+                    <div id="imageModal" class="modal fade col-lg-12 ">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header flex-column">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title w-100">Image Preview</h4>
+
+                                </div>
+                                <div class="modal-body">
+                                    <img id="modelImage" src="" style="height:100%;width:100%" />
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-secondary mb-2" data-dismiss="modal">Cancel</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_ClientFooter")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+    @*<script src="https://onesignal.github.io/emoji-picker/lib/js/config.js"></script>
+        <script src="https://onesignal.github.io/emoji-picker/lib/js/util.js"></script>
+        <script src="https://onesignal.github.io/emoji-picker/lib/js/jquery.emojiarea.js"></script>
+        <script src="https://onesignal.github.io/emoji-picker/lib/js/emoji-picker.js"></script>*@
+
+    @*<script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.js" integrity="sha512-aGWPnmdBhJ0leVHhQaRASgb0InV/Z2BWsscdj1Vwt29Oic91wECPixuXsWESpFfCcYPLfOlBZzN2nqQdMxlGTQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/1.1.1/typed.min.js"></script>*@
+
+    <script>
+        var recieverImage = "";
+        var senderImage = '@Session["Image"].ToString()';
+        var recieverName = "";
+       // console.log(senderImage);
+      //  $("#message").prop("disabled", true);
+        $("#sendmessage").prop("disabled", true);
+        $('#mymessagechatbox').addClass('direct-chat-contacts-open');
+
+
+        function beep() {
+            var snd = new Audio("data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=");
+            snd.play();
+        }
+
+          function AddRecieverMessage(messagesendername, messgerecievername, message, date, updatecontactlist = true) {
+            $('.direct-chat-messages').append(' <div class="direct-chat-msg col-md-8">' +
+                '<div class= "direct-chat-infos clearfix" >' +
+                '<span class="direct-chat-name float-left">' + messagesendername + '</span>' +
+                '<span class="direct-chat-timestamp float-right">' + date + '</span>' +
+                '</div>' +
+                '<img class= "direct-chat-img"     data-toggle="modal" style="cursor:pointer"  data-target="#imageModal"   onclick="displayImageInModal(this)"  src="/' + recieverImage + '" alt = "Message User Image" >' +
+                '<div class= "direct-chat-text" >' + message +
+                '</div>' +
+                '</div >');
+            if (message.length > 20) {
+                $('#' + messagesendername + '-lastmessage').html(message.substring(0, 20) + "...");
+            }
+            else {
+                $('#' + messagesendername + '-lastmessage').html(message);
+            }
+            $('#' + messagesendername + '-lastmessagesenddate').html(date);
+            if (updatecontactlist != false) {
+                $('#' + messagesendername + '-contactlistnames').prependTo('#mycontactlistusers');
+            }
+            $("#no-message-error-text").remove();
+            var chatHistory = document.getElementById("direct-chat-messages");
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+
+
+
+
+
+        function AddSenderMessage(messagesendername, messgerecievername, message, date, updatecontactlist = true, messagecurrentstatus = "") {
+          //  console.log("add send " + messagecurrentstatus);
+
+            var messagedeliverystatus = '<span id="' + messgerecievername + 'messagedeliverystatus">' + messagecurrentstatus+'</span>';
+
+
+            $('.direct-chat-messages').append(' <div class="direct-chat-msg offset-md-4 col-md-8 right">' +
+                '<div class= "direct-chat-infos clearfix" >' +
+                '<span class="direct-chat-name float-left">' + messagesendername + '</span>' +
+                '<span class="direct-chat-timestamp float-right">' + date + '</span>' +
+                '</div>' +
+                '<img class= "direct-chat-img" data-toggle="modal" style="cursor:pointer"  onclick="displayImageInModal(this)"  data-target="#imageModal" src="/' + senderImage + '" alt = "Message User Image" >' +
+                '<div class= "direct-chat-text  " >' + message +''+ messagecurrentstatus+
+                 '</div>' +
+                '</div >');
+            if (message.length > 20) {
+                $('#' + messgerecievername + '-lastmessage').html(messagedeliverystatus+message.substring(0, 20) + "...");
+            }
+            else {
+                $('#' + messgerecievername + '-lastmessage').html(messagedeliverystatus+ message);
+            }
+            $('#' + messgerecievername + '-lastmessagesenddate').html(date);
+            if (updatecontactlist != false) {
+                $('#' + messgerecievername + '-contactlistnames').prependTo('#mycontactlistusers');
+            }
+            var chatHistory = document.getElementById("direct-chat-messages");
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+            $("#no-message-error-text").remove();
+        }
+
+
+
+        var lastmessage_username = [];
+
+
+        function checkKeyExistsInTyppingArray(name) {
+            for (var i = 0; i < lastmessage_username.length; i++) {
+                if (lastmessage_username[i].username == name) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        function getLastMessageInTyppingArray(name) {
+            for (var i = 0; i < lastmessage_username.length; i++) {
+                if (lastmessage_username[i].username == name) {
+                    return lastmessage_username[i].lasmessage ;
+                }
+            }
+            return "";
+        }
+
+
+        function removeDataFromArray(name) {
+            for (var i = 0; i < lastmessage_username.length; i++) {
+                if (lastmessage_username[i].username == name) {
+                    lastmessage_username.splice(i, 1);
+                }
+            }
+        }
+
+
+        function updateMessageInUser_LasstMessageArray(name,message) {
+            for (var i = 0; i < lastmessage_username.length; i++) {
+                if (lastmessage_username[i].username == name) {
+                    lastmessage_username[i].lasmessage = message;
+                }
+            }
+        }
+
+        function addOnlineStatusToUser(username) {
+            $('#' + username + '-manageonlinestatus').removeClass('logged-out');
+            $('#' + username + '-manageonlinestatus').addClass('logged-in');
+        }
+
+        function addOfflineStatusToUser(username) {
+            $('#' + username + '-manageonlinestatus').removeClass('logged-in');
+            $('#' + username + '-manageonlinestatus').addClass('logged-out');
+        }
+
+
+
+        function makeMessageCounterZero(messagesendername) {
+
+            var counterUnerReadMessages = $('#' + messagesendername + '-unreadmessagescount span').html();
+       //     console.log("hk  "+counterUnerReadMessages);
+            if (counterUnerReadMessages != undefined) {
+                var totalMessagesCounter = +$('#totalmessagescounter').html();
+                totalMessagesCounter -= counterUnerReadMessages;
+                $('#totalmessagescounter').html(totalMessagesCounter);
+            }
+            $('#' + messagesendername + '-unreadmessagescount').empty();
+
+        }
+
+        function makeIncreametInMessageCounter(messagesendername) {
+         //   console.log("Increament   " + messagesendername);
+           // console.log("Increament   " + $('#' + messagesendername + '-unreadmessagescount').length );
+          //  console.log("Increament   " + $('#' + messagesendername + '-unreadmessagescount').length==1 );
+            if ($('#' + messagesendername + '-unreadmessagescount')[0].childElementCount == 0) {
+                $('#' + messagesendername + '-unreadmessagescount').append('<span class="badge badge-warning">1</span>');
+                var totalMessagesCounter = +$('#totalmessagescounter').html();
+                totalMessagesCounter += 1;
+                $('#totalmessagescounter').html(totalMessagesCounter);
+            }
+            else {
+                var counterUnerReadMessages = +$('#' + messagesendername + '-unreadmessagescount span').html();
+                counterUnerReadMessages = counterUnerReadMessages + 1;
+                $('#' + messagesendername + '-unreadmessagescount span').html(counterUnerReadMessages);
+                var totalMessagesCounter = +$('#totalmessagescounter').html();
+                totalMessagesCounter += 1;
+                $('#totalmessagescounter').html(totalMessagesCounter);
+            }
+        }
+
+
+        function manageCurrentUserOnlineStatus(isOnline) {
+            if (isOnline == true) {
+                $('#currentUserName').empty();
+                $('#currentUserName').append(recieverName + ' <small style="color:green;">online</small>');
+            }
+            else {
+                $('#currentUserName').empty();
+                $('#currentUserName').append(recieverName + ' <small style="color:red;">offline</small>');
+            }
+        }
+
+
+        $(function () {
+            // Reference the auto-generated proxy for the hub.
+            var chat = $.connection.messageUserHub;
+            // Create a function that the hub can call back to display messages.
+            chat.client.addNewRecieverMessageToPage = function (messagesendername, messgerecievername, message, date ) {
+              //  alert(name + " " + recieverName);
+                // Add the message to the page.
+                //   console.log(messagesendername + "  " + messgerecievername + "   " + recieverName);
+                beep();
+                updateMessageInUser_LasstMessageArray(messagesendername, message);
+
+                if (messagesendername == recieverName) {
+                    AddRecieverMessage(messagesendername, messgerecievername, message, date);
+                    chat.server.makeMessageAsRead(messgerecievername, messagesendername);
+
+                }
+                else {
+               //     console.log(messagesendername + "  " + messgerecievername + "   " + recieverName);
+
+                    makeIncreametInMessageCounter(messagesendername);
+                    $('#' + messagesendername + '-lastmessagesenddate').html(date);
+                    if (message.length > 20) {
+                        $('#' + messagesendername + '-lastmessage').html(message.substring(0, 20) + "...");
+                    }
+                    else {
+                        $('#' + messagesendername + '-lastmessage').html(message);
+                    }
+                    $('#' + messagesendername + '-contactlistnames').prependTo('#mycontactlistusers');
+
+
+                }
+
+                //$('.message-Card-Body').append('<li><strong>' + htmlEncode(name)
+                //    + '</strong>: ' + htmlEncode(message) + '</li>');
+            };
+
+            chat.client.addNewSenderMessageToPage = function (messagesendername, messgerecievername, message, date, isDelivered) {
+                // Add the message to the page.
+                var messagecurrentstatus = "s s s s";
+                if (isDelivered === true) {
+                    messagecurrentstatus = '<i class="fas fa-check-double"></i>';
+
+                }
+                else {
+                    messagecurrentstatus = '<i class="fas fa-check"></i>';
+                }
+
+              //  console.log(messagecurrentstatus);
+                AddSenderMessage(messagesendername, messgerecievername, message, date,true, messagecurrentstatus);
+                //$('.message-Card-Body').append('<li><strong>' + htmlEncode(name)
+                //    + '</strong>: ' + htmlEncode(message) + '</li>');
+            };
+
+
+            chat.client.goOnline = function (username) {
+                addOnlineStatusToUser(username);
+                toggleMessageToDeliveredState(username);
+                if (username == recieverName) {
+                    manageCurrentUserOnlineStatus(true);
+                }
+            }
+
+            chat.client.goOffline = function (username) {
+                addOfflineStatusToUser(username);
+                if (username == recieverName) {
+                    manageCurrentUserOnlineStatus(false);
+                }
+            }
+
+            chat.client.updateAllOnlineUserStatus = function (data) {
+              //  console.log("online users");
+               // console.log(data);
+                for (var i = 0, size = data.length; i < size; i++) {
+                    addOnlineStatusToUser(data[i]);
+                }
+            }
+
+
+            chat.client.addTypingMessageRequest = function (typername) {
+               // console.log(checkKeyExistsInTyppingArray(typername));
+                if (checkKeyExistsInTyppingArray(typername)) {
+                 //   console.log("enter false");
+                    return;
+                }
+               // console.log("1 " + typername);
+                                   lastmessage_username.push({
+                    username: typername, lasmessage: $('#' + typername + '-lastmessage').html()
+                });
+            //    console.log("2");
+              //  console.log("3 " + $('#' + typername + '-lastmessage').html());
+              //  console.log("4 " + $('#' + typername + '-typingmessage').html());
+                
+                $('#' + typername + '-lastmessage').html("<i>Typing</i><span id=" + typername + "-typingmessage></span>");
+                $('#' + typername +'-typingmessage').typed({
+                    strings: ["...", "...", "...", "...", "...", "...", "...", "...", "..."],
+                    // Optionally use an HTML element to grab strings from (must wrap each string in a <p>)
+                    stringsElement: null,
+                    // typing speed
+                    typeSpeed: 30,
+                    // time before typing starts
+                    startDelay: 1200,
+                    // backspacing speed
+                    backSpeed: 20,
+                    // time before backspacing
+                    backDelay: 500,
+                    // loop
+                    loop: false,
+                    // false = infinite
+                    loopCount: 1,
+                    // show cursor
+                    showCursor: false,
+                    // character for cursor
+                    cursorChar: "",
+                    // attribute to type (null == text)
+
+                    // either html or text
+                    contentType: 'html',
+                    // call when done callback function
+                    callback: function () {
+                        $('#' + typername + '-typingmessage').remove();
+                        $('#' + typername + '-lastmessage').html(getLastMessageInTyppingArray(typername));
+                        removeDataFromArray(typername);
+
+                      },
+                    // starting callback function before each string
+                    preStringTyped: function () { },
+                    //callback for every typed string
+                    onStringTyped: function () { },
+                    // callback for reset
+                    resetCallback: function () { alert("sdf"); }
+                });
+            }
+
+
+
+            chat.client.addMessageForUser = function (data, isOnline) {
+                $("#message").prop("disabled", false);
+
+                $('.direct-chat-messages').empty();
+            //    console.log(data);
+                manageCurrentUserOnlineStatus(isOnline);
+
+                if (data.length == 0) {
+                    $('.direct-chat-messages').append('<h6 class="text-center" id="no-message-error-text">No Message Yet </h6>');
+                    return;
+                }
+
+                // Add the message to the page.
+                for (var i = 0, size = data.length; i < size; i++) {
+
+                    var item = data[i];
+                  //  console.log((item["IsRead"] === true) + "    " + item["IsRead"]);
+                    if (item['SenderUserName'] == recieverName || item['RecieverUserName'] == recieverName) {
+                        if (item['SenderUserName'] == recieverName) {
+                            AddRecieverMessage(item['SenderUserName'], item['RecieverUserName'], item['Message'], item['AddedOnDateInString'], false);
+                            makeMessageCounterZero(item['SenderUserName']);
+                        }
+                        else {
+
+                            var messagecurrentstatus = "";
+                            if (item["IsRead"] === true) {
+                                messagecurrentstatus = '<i class="fas fa-check-double text-red" ></i>';
+                            }
+                            else if (item["IsDelivered"] === true) {
+                                messagecurrentstatus = '<i class="fas fa-check-double"></i>';
+
+                            }
+                            else {
+                                messagecurrentstatus = '<i class="fas fa-check"></i>';
+                            }
+                            AddSenderMessage(item['SenderUserName'], item['RecieverUserName'], item['Message'], item['AddedOnDateInString'], false, messagecurrentstatus);
+                        }
+
+                    }
+                    else {
+                        var counterUnerReadMessages = +$('#' +item['SenderUserName'] + '-unreadmessagescount span').html();
+                        counterUnerReadMessages = counterUnerReadMessages + 1;
+                        $('#' +item['SenderUserName'] + '-unreadmessagescount span').html(counterUnerReadMessages);
+                        $('#' + item['SenderUserName'] + '-lastmessagesenddate').html(item['AddedOnDateInString']);
+                        if (item['Message'].length > 20) {
+                            $('#' +item['SenderUserName'] + '-lastmessage').html(item['Message'].substring(0, 20) + "...");
+                        }
+                        else {
+                            $('#' +item['SenderUserName'] + '-lastmessage').html(item['Message']);
+                        }
+                    }
+                }
+
+                //$('.message-Card-Body').append('<li><strong>' + htmlEncode(name)
+                //    + '</strong>: ' + htmlEncode(message) + '</li>');
+            };
+
+            function toggleMessageToDeliveredState(recieverMessageName) {
+                if (recieverName == recieverMessageName) {
+                    $('.fa-check').addClass('fa-check-double');
+                    $('.fa-check').removeClass('fa-check');
+                }
+            }
+
+            function toggleMessageToReadState(recieverMessageName) {
+                if (recieverName == recieverMessageName) {
+                    $('.fa-check-double').delay(3000).addClass('text-red');
+            //       makeMessageCounterZero(recieverMessageName);
+                }
+            }
+
+
+            chat.client.makeMessageDelivered = function () {
+
+            }
+
+            chat.client.makeMessageRead = function (recieverMessageName) {
+                toggleMessageToReadState(recieverMessageName);
+            }
+
+
+            $('#message').emojioneArea({
+                pickerPosition: 'top'
+            });
+
+            // Get the user name and store it to prepend to messages.
+            //$('#displayname').val(prompt('Enter your name:', ''));
+            //// Set initial focus to message input box.
+            $('#message').focus();
+            // Start the connection.
+            if ($.connection.hub && $.connection.hub.state === $.signalR.connectionState.disconnected) {
+                $.connection.hub.start().done(function () {
+                    $('#sendmessage').click(function () {
+                        //        console.log("Sdfsdf Enter");
+                        // Call the Send method on the hub.
+                        chat.server.userCustomerMessage(recieverName, $('#message').val());
+                        // Clear text box and reset focus for next comment.
+                        $('.emojionearea-editor').html('');
+                        $('#message').val('').focus();
+                    });
+
+
+
+                    $(".messageRow").click(function () {
+                        recieverImage = $(this).attr("data-imageName");
+                        recieverName = $(this).attr("data-userName");
+                        $('#currentUserName').html(recieverName);
+
+                        //alert($(this).attr("data-imageName"));
+                        //console.log(recieverName);
+                        //alert($(this).attr("data-imageName"));
+                        //alert($(this).attr("data-userName"));
+                        chat.server.getUserMessagesForClient(recieverName);
+                        //$('.direct-chat-contacts').hide();
+                        //$('.direct-chat-contacts').show();
+                        $('#mymessagechatbox').removeClass('direct-chat-contacts-open');
+                    });
+
+
+                    $('#message').keypress(function () {
+                        //      console.log("key press" + " " + recieverName);
+                        chat.server.sendTypingMessageRequest(recieverName);
+                    });
+                    //$('.emojionearea-editor').keypress(function () {
+                    //    console.log("key press" + " " + recieverName);
+                    //    chat.server.sendTypingMessageRequest(recieverName);
+                    //});
+
+
+                    $("body").on('DOMSubtreeModified', ".emojionearea-editor", function () {
+                        //    console.log("key press" + " " + recieverName);
+                        if ($('.emojionearea-editor').html().length >= 1 && recieverName != "") {
+                            $("#sendmessage").prop("disabled", false);
+                        }
+                        else {
+                            $("#sendmessage").prop("disabled", true);
+                        }
+                        chat.server.sendTypingMessageRequest(recieverName);
+
+
+
+                    });
+
+                    function AddMessagesForSpecificUser() {
+                        chat.server.getUserMessagesForClient(recieverName, $('#message').val(), true);
+
+                    }
+
+                });
+            } else {
+
+                   $('#sendmessage').click(function () {
+                        //        console.log("Sdfsdf Enter");
+                        // Call the Send method on the hub.
+                        chat.server.userCustomerMessage(recieverName, $('#message').val());
+                        // Clear text box and reset focus for next comment.
+                        $('.emojionearea-editor').html('');
+                        $('#message').val('').focus();
+                    });
+
+
+
+                    $(".messageRow").click(function () {
+                        recieverImage = $(this).attr("data-imageName");
+                        recieverName = $(this).attr("data-userName");
+                        $('#currentUserName').html(recieverName);
+
+                        //alert($(this).attr("data-imageName"));
+                        //console.log(recieverName);
+                        //alert($(this).attr("data-imageName"));
+                        //alert($(this).attr("data-userName"));
+                        chat.server.getUserMessagesForClient(recieverName);
+                        //$('.direct-chat-contacts').hide();
+                        //$('.direct-chat-contacts').show();
+                        $('#mymessagechatbox').removeClass('direct-chat-contacts-open');
+                    });
+
+
+                    $('#message').keypress(function () {
+                        //      console.log("key press" + " " + recieverName);
+                        chat.server.sendTypingMessageRequest(recieverName);
+                    });
+                    //$('.emojionearea-editor').keypress(function () {
+                    //    console.log("key press" + " " + recieverName);
+                    //    chat.server.sendTypingMessageRequest(recieverName);
+                    //});
+
+
+                    $("body").on('DOMSubtreeModified', ".emojionearea-editor", function () {
+                        //    console.log("key press" + " " + recieverName);
+                        if ($('.emojionearea-editor').html().length >= 1 && recieverName != "") {
+                            $("#sendmessage").prop("disabled", false);
+                        }
+                        else {
+                            $("#sendmessage").prop("disabled", true);
+                        }
+                        chat.server.sendTypingMessageRequest(recieverName);
+
+
+
+                    });
+
+                    function AddMessagesForSpecificUser() {
+                        chat.server.getUserMessagesForClient(recieverName, $('#message').val(), true);
+
+                    }
+
+               
+            }
+            });
+
+        function GetUserMessages(imagePath, userName) {
+            //alert(imagePath, userName);
+            recieverImage = imagePath;
+            recieverName = userName;
+            AddMessagesForSpecificUser();
+        }
+
+        // This optional function html-encodes messages for display in the page.
+        function htmlEncode(value) {
+            var encodedValue = $('<div/>').text(value).html();
+            return encodedValue;
+        }
+
+
+        //$(function () {
+        //    // Initializes and creates emoji set from sprite sheet
+        //    window.emojiPicker = new EmojiPicker({
+        //        emojiable_selector: '[data-emojiable=true]',
+        //        assetsPath: 'http://onesignal.github.io/emoji-picker/lib/img/',
+        //        popupButtonClasses: 'fa fa-smile-o'
+        //    });
+        //    // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
+        //    // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
+        //    // It can be called as many times as necessary; previously converted input fields will not be converted again
+        //    window.emojiPicker.discover();
+        //});
+
+
+        function displayImageInModal(e) {
+            //console.log("enter temp");
+//            $("#modelImage").attr("src", imagePath);
+            var imagePath = $(e).attr("src");
+               //  alert(imagePath);
+
+            $("#modelImage").attr("src", imagePath);
+
+        }
+
+
+        $("img").click(function () {
+     //       alert("SDfsdf");
+            var imagePath = $(this).attr("src");
+       //     alert(imagePath);
+            $("#modelImage").attr("src", imagePath);
+        });
+
+    </script>
+
+
+
+
+</body>
+
+</html>

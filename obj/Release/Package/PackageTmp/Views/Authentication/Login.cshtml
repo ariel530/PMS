@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | Admin Log in </title>
+
+    @Html.Partial("_AdminHeaderLinks")
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="" class="h1"><b>PMS</b> APP</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+
+                <form  method="post" onsubmit="return submitForm()">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="username" placeholder="Email Or UserName">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="hidden" class="form-control" name="returnurl" value="@ViewBag.ReturnUrl" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3" id="customerseller">
+                        <input type="password" class="form-control" name="customerseller" placeholder="Customer Seller">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fa fa-user-plus"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3" id="logintype1">
+
+                        <select class="form-control usertype" name="logintype" id="logintype" style="width: 80%;">
+                            <option value="admin">Admin</option>
+                            <option value="user" selected="selected">User</option>
+                            <option value="customer">Customer</option>
+
+                        </select>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-users"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block" >Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                @*<div class="social-auth-links text-center mt-2 mb-3">
+                        <a href="#" class="btn btn-block btn-primary">
+                            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                        </a>
+                        <a href="#" class="btn btn-block btn-danger">
+                            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                        </a>
+                    </div>
+
+
+                    <p class="mb-1">
+                        <a href="forgot-password.html">I forgot my password</a>
+                    </p>
+                    <p class="mb-0">
+                        <a href="register.html" class="text-center">Register a new membership</a>
+                    </p>*@
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+
+    @Html.Partial("_AdminFooterLinks")
+    <script>
+
+        function submitForm() {
+           
+            var username = $('[name="username"]').val();
+            var password = $('[name="password"]').val();
+            var returnurl = $('[name="returnurl"]').val();
+            var logintype = $('[name="logintype"]').val();
+            var customerseller = $('[name="customerseller"]').val();
+            $.post("/Authentication/ValidateLoginUsingAjax", { username: username, password: password, logintype: logintype, customerseller: customerseller, returnurl: returnurl }, function (result) {
+
+                if (result == false) {
+                    toastr.error("Invalid <b><span style='color: blue;'> UserName </span></b> OR <b><span style='color: blue;'> Password </span></b>.Try Again");
+                } else {
+                    location.href = result;
+                }
+            });
+            return false;
+        }
+
+
+        $("#logintype").change(function () {
+            var selectedType= $("#logintype").val();
+            if (selectedType == "customer") {
+                $("#customerseller").fadeIn(1000);
+            }
+            else {
+                $("#customerseller").fadeOut(1000);
+            }
+            });
+        $("#customerseller").hide();
+    </script>
+</body>
+</html>
+

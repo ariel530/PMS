@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="PMS-Web.config Connection String" description="PMS Connection String used in web.config by the application to access the database." defaultValue="Data Source=SQL5077.site4now.net;Initial Catalog=db_a7a8d7_pmsasystem;User Id=db_a7a8d7_pmsasystem_admin;Password=Shah786!;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\SSC\\source\\repos\\PMS_Product\\PMS\\obj\\Release\\Package\\PackageTmp\\Views\\Web\.config$" match="/configuration/connectionStrings/add[@name='PMS']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\SSC\\source\\repos\\PMS_Product\\PMS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='PMS']/@connectionString" />
+  </parameter>
+</parameters>

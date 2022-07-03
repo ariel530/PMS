@@ -1,0 +1,1359 @@
+﻿@model PMS.DynamicBindingModels.Staff_Country_Category_Designation_Gender_ForAddUpdate
+@{
+    ViewBag.Title = "Add Staff Info";
+    ViewBag.Page = "Staff Info";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | @ViewBag.Title</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+
+    <style>
+        .filepond--drop-label {
+            color: #4c4e53;
+        }
+
+        .filepond--label-action {
+            text-decoration-color: #babdc0;
+        }
+
+        .filepond--panel-root {
+            background-color: #edf0f4;
+        }
+
+        .filepond--root {
+            width: 170px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_ClientPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_ClientNavbar")
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_ClientSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">@ViewBag.Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Title</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+
+                    @if (TempData["ResultStatus"] != null)
+                    {
+
+                        <div class="alert alert-warning alert-dismissible">
+                            <button type="button" class="" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-exclamation-triangle"></i>@TempData["ResultMessageTitle"].ToString()</h5>
+                            @TempData["ResultMessage"].ToString()
+                        </div>
+
+                    }
+
+
+
+                    <div class="alert alert-danger alert-dismissible" id="alertresult">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5 id="alertstatus"><i class="icon fas fa-ban"></i> Alert!</h5>
+                        <p id="alertmessage">
+                            Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my
+                            entire
+                            soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                        </p>
+                    </div>
+
+                    <!-- SELECT2 EXAMPLE -->
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">@ViewBag.Title</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form id="quickForm" action="" method="post" enctype="multipart/form-data">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="form-group col-md-5">
+                                            <label for="exampleInputAddress1">Staff Image</label>
+
+                                            <input type="file" class="filepond" name="filepond" />
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputFirstName1">First Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="firstname" class="form-control" id="exampleInputFirstName1" placeholder="Enter First Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputLastName1">Last Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="lastname" class="form-control" id="exampleInputLastName1" placeholder="PassEnter Last Name">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="row">
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputFathername">Father Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                </div>
+                                                <input type="text" name="fathername" class="form-control" id="exampleInputFathername" placeholder="Enter Father Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputgender">Gender</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-user-plus"></i></span>
+                                                </div>
+                                                <select class="form-control gender" name="gender" id="exampleInputgender" style="width: 80%;">
+
+                                                    @foreach (var genderData in Model.GendersData)
+                                                    {
+                                                        <option value="@genderData.Id">@genderData.GenderName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputPhone1">Phone: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputPhone1" name="phone" class="form-control" placeholder="Enter Phone" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputMobile1">Mobile: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-mobile"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputMobile1" name="mobile" class="form-control" placeholder="Enter Mobile" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputEmail1">Email: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                </div>
+                                                <input type="email" id="exampleInputEmail1" name="email" class="form-control" placeholder="Enter Email">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputPassword1">Password: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                </div>
+                                                <input type="password" id="exampleInputPassword1" name="password" class="form-control" placeholder="Enter Password">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputUserName1">UserName: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputUserName1" name="username" class="form-control" placeholder="Enter User Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="referfrom">Refer From:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-male"></i></span>
+                                                </div>
+                                                <textarea class="form-control" id="referfrom" rows="1" name="referFrom" placeholder="Enter Referer Name..."></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputStaffCategory1">Staff Category:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-user-plus"></i></span>
+                                                </div>
+                                                <select class="form-control staffcategory" name="staffcategory" id="exampleInputStaffCategory1" style="width: 80%;">
+
+                                                    @foreach (var staffCategory in Model.StaffCategoryData)
+                                                    {
+                                                        <option value="@staffCategory.Id">@staffCategory.StaffCategoryName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleStaffDesignation1">Staff Designation:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-user-plus"></i></span>
+                                                </div>
+                                                <select class="form-control custom-select staffdesignation" name="staffdesignation" id="exampleStaffDesignation1" style="width: 80%;">
+                                                    @foreach (var staffDesignation in Model.StaffDesignationData)
+                                                    {
+                                                        <option value="@staffDesignation.Id">@staffDesignation.StaffDesignationName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputAge1">Age|Date Of Birth:</label>
+                                     
+
+                                            <div class="input-group date" id="age" data-target-input="nearest">
+                                                <div class="input-group-append" data-target="#age" data-toggle="datetimepicker">
+                                                    <div class="input-group-text"><b id="currentage" class="text-danger">0</b></div>
+                                                </div>
+                                                <input type="text" placeholder="Enter Date Of Birth"  name="age" data-toggle="datetimepicker" class="form-control datetimepicker-input" data-target="#age" />
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputCountry1">Country:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-globe"></i></span>
+                                                </div>
+                                                <select class="form-control custom-select select2bs4" name="country" id="exampleInputCountry1" style="width: 80%;">
+                                                    @foreach (var country in Model.CountryData)
+                                                    {
+                                                        <option value="@country.CountryCode">@country.CountryName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputCNIC1">CNIC: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputCNIC1" name="cnic" class="form-control" placeholder="Enter CNIC" data-inputmask="'mask': ['99999-9999999-9']" data-mask>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputPassport1">Passport: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputPassport1" name="passport" class="form-control" placeholder="Enter Passport">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputbudget">Salary:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-cheese"></i></span>
+                                                </div>
+                                                <input type="text" data-type="currency" name="salary" placeholder="Enter Salary" id="inputbudget" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label for="exampleInputCardNumber1">Card Number: </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleInputCardNumber1" name="cardnumber" class="form-control" placeholder="Enter Card Number">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row">
+                                        <div class="row form-group  col-md-11 col-11">
+                                            <div class="form-group col-md-6 col-8">
+                                                <label for="educationdegree">Degree: </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-tasks" aria-hidden="true"></i></span>
+                                                    </div>
+                                                    <input type="text" id="educationdegree" name="educationdegree" class="form-control" placeholder="Enter Degree">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-6 col-4">
+                                                <label for="exampleInputYear1">Year: </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend d-md-flex d-none">
+                                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                                                    </div>
+                                                    <select class="form-control custom-select educationyear" name="educationyear" id="educationyear" style="width: 80%;">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-1 col-1">
+                                            <label for="exampleInputYear1">ADD: </label>
+                                            <div class="input-group">
+                                                <span class="btn btn-dark" style="border-radius:100%" onclick="addeducationinfo()">+</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <span id="educationrecord"></span>
+                                  
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleInputAddress1">Address:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                                </div>
+                                                <textarea class="form-control" name="address" id="exampleInputAddress1" rows="2" placeholder="Enter Address..."></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">@ViewBag.Title</button>
+                                </div>
+                            </form>
+
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @Html.Partial("_ClientAddUpdateViewCardFooter")
+
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_ClientFooter")
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+
+
+
+
+
+
+
+    <script>
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginImageExifOrientation,
+            FilePondPluginImagePreview,
+            FilePondPluginImageCrop,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform,
+            FilePondPluginImageEdit
+        );
+
+        // Select the file input and use
+        // create() to turn it into a pond
+        // FilePond.create(
+        //     document.querySelector('.filepond'), {
+        //         labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+        //         imagePreviewHeight: 170,
+        //         imageCropAspectRatio: '1:1',
+        //         imageResizeTargetWidth: 200,
+        //         imageResizeTargetHeight: 200,
+        //         stylePanelLayout: 'compact circle',
+        //         styleLoadIndicatorPosition: 'center bottom',
+        //         styleProgressIndicatorPosition: 'right bottom',
+        //         styleButtonRemoveItemPosition: 'left bottom',
+        //         styleButtonProcessItemPosition: 'right bottom',
+        //     }
+        // );
+
+        // var imagen = '{{ trim($marca->imagen_asociada) }}'
+        // const inputElement = document.querySelector('input[type="file"]');
+
+        // FilePond.setOptions({
+        //     server: {
+        //         load: imagen.replace('/images/button/', '')
+        //     }
+        // });
+        const pond = FilePond.create(document.querySelector('.filepond'), {
+            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+            imagePreviewHeight: 170,
+            imageCropAspectRatio: '1:1',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 200,
+            stylePanelLayout: 'compact circle',
+            styleLoadIndicatorPosition: 'center bottom',
+            styleProgressIndicatorPosition: 'right bottom',
+            styleButtonRemoveItemPosition: 'left bottom',
+            styleButtonProcessItemPosition: 'right bottom'
+        });
+
+
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                createTag: function(params) {
+                    var term = $.trim(params.term);
+
+                    if (term === '') {
+                        return null;
+                    }
+
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true // add additional parameters
+                    }
+                }
+            })
+
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('.usertype').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('.gender').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('.educationyear').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('.staffdesignation').select2({
+                theme: 'bootstrap4'
+            })
+
+            $('.staffcategory').select2({
+                theme: 'bootstrap4'
+            })
+
+
+
+            //Datemask dd/mm/yyyy
+            $('#datemask').inputmask('dd/mm/yyyy', {
+                'placeholder': 'dd/mm/yyyy'
+            })
+            //Datemask2 mm/dd/yyyy
+            $('#datemask2').inputmask('mm/dd/yyyy', {
+                'placeholder': 'mm/dd/yyyy'
+            })
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+            //Date picker
+            $('#reservationdate').datetimepicker({
+                format: 'L'
+            });
+
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
+
+            //Date range picker
+           
+
+            $('#age').datetimepicker({
+                format: 'L',
+                maxDate: new Date()
+            });
+
+           
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                }
+            })
+            //Date range as a button
+            $('#daterange-btn').daterangepicker({
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function(start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+            )
+
+            //Timepicker
+            $('#timepicker').datetimepicker({
+                format: 'LT'
+            })
+
+            //Bootstrap Duallistbox
+            $('.duallistbox').bootstrapDualListbox()
+
+            //Colorpicker
+            $('.my-colorpicker1').colorpicker()
+            //color picker with addon
+            $('.my-colorpicker2').colorpicker()
+
+            $('.my-colorpicker2').on('colorpickerChange', function(event) {
+                $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+            })
+
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
+
+        })
+        // // BS-Stepper Init
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        // })
+
+        // // DropzoneJS Demo Code Start
+        // Dropzone.autoDiscover = false
+
+        // // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        // var previewNode = document.querySelector("#template")
+        // previewNode.id = ""
+        // var previewTemplate = previewNode.parentNode.innerHTML
+        // previewNode.parentNode.removeChild(previewNode)
+
+        // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        //     url: "/target-url", // Set the url
+        //     thumbnailWidth: 80,
+        //     thumbnailHeight: 80,
+        //     parallelUploads: 20,
+        //     previewTemplate: previewTemplate,
+        //     autoQueue: false, // Make sure the files aren't queued until manually added
+        //     previewsContainer: "#previews", // Define the container to display the previews
+        //     clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+        // })
+
+        // myDropzone.on("addedfile", function(file) {
+        //     // Hookup the start button
+        //     file.previewElement.querySelector(".start").onclick = function() {
+        //         myDropzone.enqueueFile(file)
+        //     }
+        // })
+
+        // // Update the total progress bar
+        // myDropzone.on("totaluploadprogress", function(progress) {
+        //     document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+        // })
+
+        // myDropzone.on("sending", function(file) {
+        //     // Show the total progress bar when upload starts
+        //     document.querySelector("#total-progress").style.opacity = "1"
+        //     // And disable the start button
+        //     file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+        // })
+
+        // // Hide the total progress bar when nothing's uploading anymore
+        // myDropzone.on("queuecomplete", function(progress) {
+        //     document.querySelector("#total-progress").style.opacity = "0"
+        // })
+
+        // // Setup the buttons for all transfers
+        // // The "add files" button doesn't need to be setup because the config
+        // // `clickable` has already been specified.
+        // document.querySelector("#actions .start").onclick = function() {
+        //     myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+        // }
+        // document.querySelector("#actions .cancel").onclick = function() {
+        //     myDropzone.removeAllFiles(true)
+        // }
+
+
+
+        // DropzoneJS Demo Code End
+
+    </script>
+    <script>
+@*FilePond.setOptions({
+server: '@Url.Action("SaveFile", "Staff")'
+});*@
+    </script>
+
+    <script>
+
+        addYearForEductationYearDropdown();
+        function addYearForEductationYearDropdown() {
+            var yearDropdown = $('#educationyear');
+            for (var start = 1900; start <= new Date().getFullYear(); start++) {
+                yearDropdown.append('<option value=' + start + ' selected>' + start + '</option>')
+            }
+
+        }
+
+
+        function addeducationinfo() {
+            var degreename = $('#educationdegree').val();
+            var degreeyear = $('#educationyear').val();
+            degreename = degreename.trim();
+            if (degreename == '') {
+                DisplayEducationInValidMessage(null,"Please enter degree");
+                return;
+            }
+            $('#educationdegree').val('');
+            $('#educationyear').val('2022');
+            var elementToAdd = '<div class="row ">'
+                + '<div class="row form-group  col-md-11 col-11">'
+                + ' <div class="form-group col-md-6 col-8">'
+                + '   <label for="educationdegree">Degree: </label>'
+                + '    <div class="input-group">'
+                + '       <div class="input-group-prepend">'
+                + '           <span class="input-group-text"><i class="fa fa-tasks" aria-hidden="true"></i></span>'
+                + '           </div>'
+                + '            <input type="text" value=' + degreename + ' class="form-control degreevalue" placeholder="Enter Degree">'
+                + '                                  </div>'
+                + '          </div>'
+
+                + '         <div class="form-group col-md-6 col-4">'
+                + '             <label for="exampleInputYear1">Year: </label>'
+                + '             <div class="input-group">'
+                + '                 <div class="input-group-prepend d-md-flex d-none">'
+                + '                      <span class="input-group-text"><i class="fas fa-calendar"></i></span>'
+                + '                  </div>'
+                + '            <input type="text"  value=' + degreeyear + ' class="form-control degreeyear" placeholder="Enter Degree">'
+               + '             </div>'
+                + '         </div>'
+                + '     </div>'
+                + '       <div class="form-group col-md-1 col-1">'
+                + '          <label for="exampleInputYear1">REM: </label>'
+                + '          <div class="input-group">'
+                + '           <span class="btn btn-danger" style="border-radius:100%" onclick="removeeductionfromrecord(this)" >X</span>'
+                + '         </div>'
+                + '     </div>'
+                + '  </div>';
+            $('#educationrecord').append(elementToAdd);
+        }
+        function removeeductionfromrecord(e) {
+            $(e).parents(".row").fadeOut(500);
+            setTimeout(function () {
+                 $(e).parents(".row").remove();
+            },500);
+        }
+
+
+
+
+
+        //Currency Validator
+        $("input[data-type='currency']").on({
+            keyup: function () {
+                formatCurrency($(this));
+            },
+            blur: function () {
+                formatCurrency($(this), "blur");
+            }
+        });
+
+
+        function formatNumber(n) {
+            // format number 1000000 to 1,234,567
+            return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        }
+
+
+        var currencySymbol = "₪";
+
+        function formatCurrency(input, blur) {
+            // appends $ to value, validates decimal side
+            // and puts cursor back in right position.
+
+            // get input value
+            var input_val = input.val();
+
+            // don't validate empty input
+            if (input_val === "") {
+                return;
+            }
+
+            // original length
+            var original_len = input_val.length;
+
+            // initial caret position
+            var caret_pos = input.prop("selectionStart");
+
+            // check for decimal
+            if (input_val.indexOf(".") >= 0) {
+
+                // get position of first decimal
+                // this prevents multiple decimals from
+                // being entered
+                var decimal_pos = input_val.indexOf(".");
+
+                // split number by decimal point
+                var left_side = input_val.substring(0, decimal_pos);
+                var right_side = input_val.substring(decimal_pos);
+
+                // add commas to left side of number
+                left_side = formatNumber(left_side);
+
+                // validate right side
+                right_side = formatNumber(right_side);
+
+                // On blur make sure 2 numbers after decimal
+                if (blur === "blur") {
+                    right_side += "00";
+                }
+
+                // Limit decimal to only 2 digits
+                right_side = right_side.substring(0, 2);
+
+                // join number by .
+                input_val = currencySymbol + left_side + "." + right_side;
+
+            } else {
+                // no decimal entered
+                // add commas to number
+                // remove all non-digits
+                input_val = formatNumber(input_val);
+                input_val = currencySymbol + input_val;
+
+                // final formatting
+                if (blur === "blur") {
+                    input_val += ".00";
+                }
+            }
+
+            // send updated string to input
+            input.val(input_val);
+
+            // put caret back in the right position
+            var updated_len = input_val.length;
+            caret_pos = updated_len - original_len + caret_pos;
+            input[0].setSelectionRange(caret_pos, caret_pos);
+        }
+
+
+
+        //var regex = /^[0-9]\d*(((,\d{3}){1})?(\.\d{0,4})?)$/
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $('[name="username"]').on("focusout", function () { ValidateUserNameIsUnique(); });
+        $('[name="email"]').on("focusout", function () { ValidateEmailIsUnique(); });
+        $('[name="cardnumber"]').on("focusout", function () { ValidateCardNumberIsUnique(); });
+
+
+
+
+
+        let usernameUniqueErrorElement = CreateErrorElement("Please Enter Reason");
+        let emailUniqueErrorElement = CreateErrorElement("Please Enter Budget");
+        let cardNumberUniqueErrorElement = CreateErrorElement("Please Enter Budget");
+        let educationDegreeErrorElement = CreateErrorElement("Please Enter Degree");
+        var usernameElement = $('[name="username"]');
+        var emailElement = $('[name="email"]');
+        var cardNumberElement = $('[name="cardnumber"]');
+        var educationElement = $('[name="educationdegree"]');
+
+
+
+
+        function CreateErrorElement(text) {
+            var tempElement = document.createElement("span");
+            $(tempElement).addClass("invalid-feedback");
+            $(tempElement).css("display", "inline");
+            tempElement.innerHTML = text;
+            return tempElement;
+        }
+
+
+        $('[name="username"]').on('keypress', function () {
+
+            $(usernameElement).removeClass('is-invalid');
+            $(usernameUniqueErrorElement).css("display", "none");
+
+        });
+
+        $('[name="email"]').on('keypress', function () {
+            $(emailElement).removeClass('is-invalid');
+            $(emailUniqueErrorElement).css("display", "none");
+
+        });
+
+
+        $('[name="cardnumber"]').on('keypress', function () {
+            $(cardNumberElement).removeClass('is-invalid');
+            $(cardNumberUniqueErrorElement).css("display", "none");
+
+        });
+
+
+
+        $('[name="educationdegree"]').on('keypress', function () {
+            $(educationElement).removeClass('is-invalid');
+            $(educationDegreeErrorElement).css("display", "none");
+
+        });
+
+
+        $('[name="age"]').on('focusout', function () {
+           // alert("SDfsd");
+            $('#currentage').text(new Date().getFullYear() - new Date($('[name = "age"]').val()).getFullYear());
+           // alert(new Date().getFullYear()-   new Date($('[name = "age"]').val()).getFullYear());
+
+
+        });
+
+
+
+
+
+
+        var isUserNameUnique = false;
+        var isEmailUnique = false;
+        var isCardNumberUnique = false;
+
+        $("#alertresult").hide();
+
+
+        function DisplayUserNameInValidMessage(username,message) {
+            usernameUniqueErrorElement.innerHTML = message + "\nSuggested UserNames:  " + username + Math.floor((Math.random() * 10000) + 1)
+                + "," + username + Math.floor((Math.random() * 10000) + 1);
+            ;
+            $(usernameUniqueErrorElement).css("display", "inline");
+            $(usernameElement).closest('.form-group').append(usernameUniqueErrorElement);
+
+            $(usernameElement).addClass('is-invalid');
+        }
+
+
+        function DisplayEmailInValidMessage(email, message) {
+            emailUniqueErrorElement.innerHTML = message;
+            ;
+            $(emailUniqueErrorElement).css("display", "inline");
+            $(emailElement).closest('.form-group').append(emailUniqueErrorElement);
+
+            $(emailElement).addClass('is-invalid');
+
+        }
+
+
+        function DisplayCardNumberInValidMessage(cardNumber, message) {
+            cardNumberUniqueErrorElement.innerHTML = message;
+            ;
+            $(cardNumberUniqueErrorElement).css("display", "inline");
+            $(cardNumberElement).closest('.form-group').append(cardNumberUniqueErrorElement);
+
+            $(cardNumberElement).addClass('is-invalid');
+
+        }
+
+
+        function DisplayEducationInValidMessage(education, message) {
+            educationDegreeErrorElement.innerHTML = message;
+            ;
+            $(educationDegreeErrorElement).css("display", "inline");
+            $(educationElement).closest('.form-group').append(educationDegreeErrorElement);
+
+            $(educationElement).addClass('is-invalid');
+
+
+        }
+
+
+        function ValidateUserNameIsUnique() {
+            isUserNameUnique = false;
+            var username = $('[name="username"]').val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("checkUserNameUniqueByAjax")',
+                data: '{username: ' + JSON.stringify(username) +  '}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (responseData) {
+                    if (responseData != null && responseData.uniquenessResult != null) {
+                        var resultList = JSON.parse(responseData.uniquenessResult);
+                        if (resultList[1] == "fail") {
+                            isUserNameUnique = true;
+                            return true;
+                        }
+                        else if (resultList[1] == "vfail")
+                        {
+                            isUserNameUnique = false;
+
+                            $("#alertmessage").text("Something went wrong while during username validation");
+                            $("#alertstatus").text("UserName Validation Fail !");
+                            $("#alertresult").fadeIn(3000);
+                            return false;
+                        }
+                        else {
+
+                            isUserNameUnique = false;
+                            DisplayUserNameInValidMessage(username, resultList[0]);
+
+                            return false;
+
+                        }
+
+
+                    }
+                    else {
+                        isUserNameUnique = false;
+                        $("#alertmessage").text("Something went wrong while during username validation");
+                        $("#alertstatus").text("UserName Validation Fail !");
+                        $("#alertresult").fadeIn(3000);
+
+                        return false;
+                    }
+                },
+                error: function (responseData) {
+                    isUserNameUnique = false;
+                    $("#alertmessage").text("Something went wrong while during username validation");
+                    $("#alertstatus").text( "UserName Validation Fail !");
+                    $("#alertresult").fadeIn(3000);
+                    return false;
+                }
+            });
+
+        }
+
+
+        function ValidateEmailIsUnique() {
+            isEmailUnique = false;
+            var email = $('[name="email"]').val();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("checkEmailUniqueByAjax")',
+                data: '{email: ' + JSON.stringify(email) +  '}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (responseData) {
+                    if (responseData != null && responseData.uniquenessResult != null) {
+                        var resultList = JSON.parse(responseData.uniquenessResult);
+                        if (resultList[1] == "fail") {
+                            isEmailUnique = true;
+                            console.log("Unique Emal");
+
+                            return true;
+                        }
+                        else if (resultList[1] == "vfail")
+                        {
+                            isEmailUnique = false;
+                            $("#alertmessage").text("Something went wrong while during email validation");
+                            $("#alertstatus").text("Email Validation Fail !");
+                            $("#alertresult").fadeIn(3000);
+                            return false;
+                        }
+                        else {
+
+                            isEmailUnique = false;
+                            DisplayEmailInValidMessage(email, resultList[0]);
+                            return false;
+
+                        }
+
+
+                    }
+                    else {
+                        isEmailUnique = false;
+                        $("#alertmessage").text("Something went wrong while during email validation");
+                        $("#alertstatus").text("Email Validation Fail !");
+                        $("#alertresult").fadeIn(3000);
+
+                        return false;
+                    }
+                },
+                error: function (responseData) {
+                    isEmailUnique = false;
+                    $("#alertmessage").text("Something went wrong while during email validation");
+                    $("#alertstatus").text( "Email Validation Fail !");
+                    $("#alertresult").fadeIn(3000);
+                    return false;
+                }
+            });
+
+        }
+
+
+        function ValidateCardNumberIsUnique() {
+            isEmailUnique = false;
+            var cardnumber = $('[name="cardnumber"]').val();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("checkStaffCardNumberUniqueByAjax")',
+                data: '{cardnumber: ' + JSON.stringify(cardnumber) +  '}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (responseData) {
+                    if (responseData != null && responseData.uniquenessResult != null) {
+                        var resultList = JSON.parse(responseData.uniquenessResult);
+                        if (resultList[1] == "fail") {
+                            isCardNumberUnique = true;
+                            console.log("Unique Emal");
+
+                            return true;
+                        }
+                        else if (resultList[1] == "vfail")
+                        {
+                            isCardNumberUnique = false;
+                            $("#alertmessage").text("Something went wrong while during card number validation");
+                            $("#alertstatus").text("Staff Card Number Validation Fail !");
+                            $("#alertresult").fadeIn(3000);
+                            return false;
+                        }
+                        else {
+
+                            isCardNumberUnique = false;
+                            DisplayCardNumberInValidMessage(cardnumber, resultList[0]);
+                            return false;
+
+                        }
+
+
+                    }
+                    else {
+                        isCardNumberUnique = false;
+                        $("#alertmessage").text("Something went wrong while during staff card number validation");
+                        $("#alertstatus").text("Staff Card Number Validation Fail !");
+                        $("#alertresult").fadeIn(3000);
+
+                        return false;
+                    }
+                },
+                error: function (responseData) {
+                    isCardNumberUnique = false;
+                    $("#alertmessage").text("Something went wrong while during staff card number validation");
+                    $("#alertstatus").text( "Staff Card Number Validation Fail !");
+                    $("#alertresult").fadeIn(3000);
+                    return false;
+                }
+            });
+
+        }
+
+
+
+
+        function SubmitFormDataByAjax(form) {
+
+
+
+                var fd = new FormData(form);
+                // append files array into the form data
+                pondFiles = pond.getFiles();
+                for (var i = 0; i < pondFiles.length; i++) {
+                    fd.append('file[]', pondFiles[i].file);
+            }
+            fd.append('educationrecord', $("#educationrecord .row .row").length);
+            var educationcounter = 1;
+            $("#educationrecord .row .row").each(function () {
+                fd.append('degreename_' + educationcounter, $(this).find('.degreevalue').val());
+                fd.append('degreeyear_' + educationcounter, $(this).find('.degreeyear').val());
+                educationcounter++;
+
+            });
+                $.ajax({
+                    url: '@Url.Action("InsetStaffDataByAjax")',
+                    type: 'POST',
+                    data: fd,
+                    dataType: 'JSON',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (responseData) {
+                        if (responseData != null && responseData.InsertionResult != null) {
+
+                            var resultList = JSON.parse(responseData.InsertionResult);
+                            if (resultList[1] == "fail") {
+
+                                $("#alertmessage").text(resultList[0]);
+                                $("#alertstatus").text(resultList[2]);
+                                $("#alertresult").fadeIn(3000);
+                             }
+                            else if (resultList[1] == "vfail") {
+
+                                $("#alertmessage").text(resultList[0]);
+                                $("#alertstatus").text(resultList[2]);
+                                $("#alertresult").fadeIn(3000);
+                            }
+                            else {
+
+                                location.href = "DisplayStaff";
+
+                            }
+                        }
+                        else {
+                            $("#alertmessage").text("Something went wrong while during Staff insertion");
+                            $("#alertstatus").text("Staff Insertion Fail !");
+                            $("#alertresult").fadeIn(3000);
+                  }
+                        //    todo the logic
+                        // remove the files from filepond, etc
+                    },
+                    error: function (responseData) {
+                        $("#alertmessage").text("Something went wrong while during Staff insertion");
+                        $("#alertstatus").text("Staff Insertion Fail !");
+                        $("#alertresult").fadeIn(3000);
+                        //    todo the logic
+                    }
+                });
+
+        }
+
+
+        $(function () {
+            $.validator.setDefaults({
+                submitHandler: function (form) {
+                    var username = $('[name="username"]').val();
+                    if (isUserNameUnique == false) {
+                        DisplayUserNameInValidMessage(username, "Staff with username "+ username + " has  already taken. ");
+                        return false;
+                    }
+                    var email = $('[name="email"]').val();
+                    if (isEmailUnique == false) {
+                        DisplayEmailInValidMessage(email, "Staff with email " + email + " has  already registered. ");
+                        return false;
+                    }
+
+                    var cardnumber = $('[name="cardnumber"]').val();
+                    if (isCardNumberUnique == false) {
+                        DisplayCardNumberInValidMessage(cardnumber, "Staff with card number " + cardnumber + " has  already registered. ");
+                        return false;
+                    }
+                    SubmitFormDataByAjax(form);
+                }
+            });
+
+
+            $('#quickForm').validate({
+                rules: {
+                    firstname: {
+                        required: true,
+                    },
+                    fathername: {
+                        required: true,
+                    },
+                    cardnumber: {
+                        required: true,
+                    },
+                    salary: {
+                        required: true,
+                        maxlength:18
+                    },
+                    filepond: {
+                        required: true,
+                    },
+                    lastname: {
+                        required: true,
+                    },
+                    username: {
+                        required: true,
+                    },
+
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    },
+
+                },
+                messages: {
+
+                    filepond: {
+                        required: "Please enter a staff image",
+                    },
+                    firstname: {
+                        required: "Please enter a first name",
+                    },
+                    fathername: {
+                        required: "Please enter a father name",
+                    },
+                    cardnumber: {
+                        required: "Please enter a Card Number",
+                    },
+                    salary: {
+                        required: "Please enter a salary",
+                        maxlength: "Enter valid salary"
+                    },
+                    lastname: {
+                        required: "Please enter a last name",
+                    },
+                    username: {
+                        required: "Please enter a staff name",
+                    },
+
+                    email: {
+                        required: "Please enter a email address",
+                        email: "Please enter a vaild email address"
+                    },
+                    password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 5 characters long"
+                    },
+
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

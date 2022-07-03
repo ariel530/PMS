@@ -1,0 +1,681 @@
+﻿
+@{
+    ViewBag.Title = "MapProjectCustomization";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS 3 | Project Map Customization</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+
+
+
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        .modal-confirm {
+            font-size: 14px;
+        }
+
+            .modal-confirm .modal-content {
+                padding: 20px;
+                border-radius: 5px;
+                border: none;
+            }
+
+            .modal-confirm .modal-header {
+                border-bottom: none;
+                position: relative;
+            }
+
+            .modal-confirm h4 {
+                text-align: center;
+                font-size: 26px;
+                margin: 30px 0 -15px;
+            }
+
+            .modal-confirm .form-control,
+            .modal-confirm .btn {
+                min-height: 40px;
+                border-radius: 3px;
+            }
+
+            .modal-confirm .close {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+            }
+
+            .modal-confirm .modal-footer {
+                border: none;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 13px;
+            }
+
+            .modal-confirm .icon-box {
+                position: absolute;
+                margin: 0 auto;
+                left: 0;
+                right: 0;
+                top: -70px;
+                width: 95px;
+                height: 95px;
+                border-radius: 50%;
+                z-index: 9;
+                background: #82ce34;
+                padding: 15px;
+                text-align: center;
+                box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+            }
+
+                .modal-confirm .icon-box i {
+                    font-size: 58px;
+                    position: relative;
+                    top: 3px;
+                }
+
+            .modal-confirm.modal-dialog {
+                margin-top: 80px;
+            }
+
+            .modal-confirm .btn {
+                border-radius: 4px;
+                text-decoration: none;
+                transition: all 0.4s;
+                line-height: normal;
+                border: none;
+            }
+
+                .modal-confirm .btn:hover,
+                .modal-confirm .btn:focus {
+                    background: #6fb32b;
+                    outline: none;
+                }
+    </style>
+
+
+    <body class="hold-transition sidebar-mini layout-fixed">
+        <div class="wrapper">
+            <!-- Preloader -->
+            @Html.Partial("_ClientPreloader")
+
+            <!-- Navbar -->
+            @Html.Partial("_AdminNavbar")
+
+            <!-- /.navbar -->
+            <!-- Main Sidebar Container -->
+            @Html.Partial("_ClientSidebar")
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1 class="m-0">Project</h1>
+                            </div><!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="#">Project</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Project Map</a></li>
+                                    <li class="breadcrumb-item active">Customization</li>
+                                </ol>
+                            </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content-header -->
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        <!-- SELECT2 EXAMPLE -->
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">Project Map Customization</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <form id="quickForm">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="form-group col-md-12 clearfix">
+                                                <label for="exampleInputUserName1">Map Color Type </label>
+                                                <div class="input-group">
+                                                    <div class="icheck-purple d-inline">
+                                                        <input type="radio" value="1" name="mapcolortype" checked id="singleColor">
+                                                        <label for="singleColor">
+                                                            Single Color&nbsp;&nbsp;
+                                                        </label>
+                                                    </div>
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="radio" value="2" name="mapcolortype" id="multipleColor">
+                                                        <label for="multipleColor">
+                                                            Multiiple Color
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="row" id="singleColorTypeCheck">
+                                            <div class="form-group col-md-12">
+                                                <label for="exampleSingleColorCheck1">Single Color Type </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-cog"></i></span>
+                                                    </div>
+                                                    <input type="checkbox" id="exampleSingleColorCheck1" class="col-lg-12 col-12" style="max-height: 15px;" name="colorTypeCheckBox" checked data-size="12px" data-label-width="100%" data-bootstrap-switch data-off-color="danger" data-on-text="Yes, Single Color" data-off-text="No, Color Range" data-on-color="purple">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="multipleColorText">
+                                            <div class="form-group col-md-12">
+                                                <label for="exampleMultipleColorType1">Multiple Color </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-dot-circle"></i></span>
+                                                    </div>
+                                                    <select class="select2" name="multipleColorMap" id="exampleMultipleColorType1" multiple="multiple" data-placeholder="Select a Color" data-dropdown-css-class="select2" style="width: 80%;">
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" id="singleColorText">
+                                            <div class="form-group col-md-12">
+                                                <label for="exampleSingleColorType1">Single Color </label>
+                                                <div class="input-group select2-purple">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fas fa-dot-circle"></i></span>
+                                                    </div>
+                                                    <select class="singleItemSelect" id="exampleSingleColorType1" name="singleColorMap" multiple="multiple" data-placeholder="Select a Color" data-dropdown-css-class="select2-purple" style="width:80%;" require>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <button type="submit" id="updadeMapCustomiztion" class="btn ">Update Map Configuration</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+
+
+                                <div id="myModal1" class="modal fade">
+                                    <div class="modal-dialog modal-confirm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="icon-box">
+                                                    <i class="fa fa-pencil"></i>
+                                                </div>
+                                                <h4 class="modal-title w-100">Confirmation</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="text-center">Are You sure You want to update map customization.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary btn-block" id="SubForm" data-dismiss="modal">Sure, Update It</button>
+                                                <button class="btn btn-danger btn-block" data-dismiss="modal">Cancel</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="myModal2" class="modal fade">
+                                    <div class="modal-dialog modal-confirm">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="icon-box">
+                                                    <i class="fa fa-check"></i>
+                                                </div>
+                                                <h4 class="modal-title w-100">Awsome!</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p class="text-center">Your Map has been customized successfully...</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-success btn-block" data-dismiss="modal">Ok</button>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                               @Html.Partial("_ClientAddUpdateViewCardFooter")
+                                
+                            </div>
+                        </div>
+                        <!-- /.card -->
+
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+            @Html.Partial("_AdminFooter")
+
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Control sidebar content goes here -->
+
+            </aside>
+            <!-- /.control-sidebar -->
+        </div>
+        <!-- ./wrapper -->
+        <!-- JavaScript Links -->
+        @Html.Partial("_AdminFooterLinks")
+
+
+        <script>
+        $('#singleColor').click(function() {
+            $("#multipleColorText").hide();
+            $("#singleColorText").show();
+            $("#singleColorTypeCheck").show();
+            $("#updadeMapCustomiztion").css("background-color", 'rgb(111, 66, 193)');
+            $("#updadeMapCustomiztion").css("color", 'white');
+        });
+        $('#multipleColor').click(function() {
+            toastr.info("This is for <span style='color: red;'><i class='fas fa-crown'> PRO</i> </span> users. Contact with admin to access it.");
+            $("#singleColor").prop("checked", true);
+            return;
+
+            $("#updadeMapCustomiztion").css("background-color", 'rgb(0, 123, 255)');
+            $("#updadeMapCustomiztion").css("color", 'white');
+            $("#singleColorTypeCheck").hide();
+            $("#multipleColorText").show();
+            $("#singleColorText").hide();
+
+
+
+        });
+        $(document).ready(function() {
+            var radioButtonValue = localStorage.ProjectMapSingleOrMultipleColor;
+            if (radioButtonValue == 1 || radioButtonValue == undefined) {
+                $("#multipleColorText").hide();
+                $("#updadeMapCustomiztion").css("background-color", 'rgb(111, 66, 193)');
+                $("#updadeMapCustomiztion").css("color", 'white');
+            } else {
+                $("#singleColorTypeCheck").hide();
+                $("#multipleColorText").show();
+                $("#singleColorText").hide();
+                $("#multipleColor").prop("checked", true);
+                $("#updadeMapCustomiztion").css("background-color", 'rgb(0, 123, 255)');
+                $("#updadeMapCustomiztion").css("color", 'white');
+            }
+            if (radioButtonValue != undefined && localStorage.ProjectCountryMapColors) {
+                console.log("Enter ro ");
+                if (radioButtonValue == 1) {
+                    console.log("Enter ro 4");
+                    var retrievedObject = localStorage.getItem("PCML_1");
+                    var obj = JSON.parse(retrievedObject);
+                    $("#exampleSingleColorType1").append('<option value=' + obj + ' selected >' + obj + '</option>');
+                } else {
+                    var temp = Number(localStorage.ProjectCountryMapColors);
+                    console.log("Enter ro ww " + temp);
+
+                    for (var i=1; i <= temp; i++) {
+                        var retrievedObject = localStorage.getItem("PCML_" + i);
+                        var obj = JSON.parse(retrievedObject);
+                        $("#exampleMultipleColorType1").append('<option value=' + obj + ' selected >' + obj + '</option>');
+
+                    }
+                }
+
+            }
+
+            //   $("#exampleSingleColorType1").append('<option value=1 selected >My option</option>');
+        });
+        </script>
+        <!-- Country User Map Render Script -->
+
+
+
+
+        <script>
+        FilePond.registerPlugin(
+            FilePondPluginFileValidateType,
+            FilePondPluginImageExifOrientation,
+            FilePondPluginImagePreview,
+            FilePondPluginImageCrop,
+            FilePondPluginImageResize,
+            FilePondPluginImageTransform,
+            FilePondPluginImageEdit
+        );
+
+        // Select the file input and use
+        // create() to turn it into a pond
+        // FilePond.create(
+        //     document.querySelector('.filepond'), {
+        //         labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+        //         imagePreviewHeight: 170,
+        //         imageCropAspectRatio: '1:1',
+        //         imageResizeTargetWidth: 200,
+        //         imageResizeTargetHeight: 200,
+        //         stylePanelLayout: 'compact circle',
+        //         styleLoadIndicatorPosition: 'center bottom',
+        //         styleProgressIndicatorPosition: 'right bottom',
+        //         styleButtonRemoveItemPosition: 'left bottom',
+        //         styleButtonProcessItemPosition: 'right bottom',
+        //     }
+        // );
+
+        // var imagen = '{{ trim($marca->imagen_asociada) }}'
+        // const inputElement = document.querySelector('input[type="file"]');
+
+        // FilePond.setOptions({
+        //     server: {
+        //         load: imagen.replace('/images/button/', '')
+        //     }
+        // });
+        const pond = FilePond.create(document.querySelector('.filepond'), {
+            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+            imagePreviewHeight: 170,
+            imageCropAspectRatio: '1:1',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 200,
+            stylePanelLayout: 'compact circle',
+            styleLoadIndicatorPosition: 'center bottom',
+            styleProgressIndicatorPosition: 'right bottom',
+            styleButtonRemoveItemPosition: 'left bottom',
+            styleButtonProcessItemPosition: 'right bottom'
+        });
+
+
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                minimumSelectionLength: 3,
+                createTag: function(params) {
+                    var term = $.trim(params.term);
+
+                    if (term === '') {
+                        return null;
+                    }
+
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true // add additional parameters
+                    }
+                }
+            })
+
+            $('.singleItemSelect').select2({
+                tags: true,
+                tokenSeparators: [',', ' '],
+                maximumSelectionLength: 1,
+                createTag: function(params) {
+                    var term = $.trim(params.term);
+
+                    if (term === '') {
+                        return null;
+                    }
+
+                    return {
+                        id: term,
+                        text: term,
+                        newTag: true // add additional parameters
+                    }
+                }
+            })
+
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+
+
+            //Datemask dd/mm/yyyy
+            $('#datemask').inputmask('dd/mm/yyyy', {
+                'placeholder': 'dd/mm/yyyy'
+            })
+            //Datemask2 mm/dd/yyyy
+            $('#datemask2').inputmask('mm/dd/yyyy', {
+                'placeholder': 'mm/dd/yyyy'
+            })
+            //Money Euro
+            $('[data-mask]').inputmask()
+
+            //Date picker
+            $('#reservationdate').datetimepicker({
+                format: 'L'
+            });
+
+            //Date and time picker
+            $('#reservationdatetime').datetimepicker({
+                icons: {
+                    time: 'far fa-clock'
+                }
+            });
+
+            //Date range picker
+            $('#reservation').daterangepicker()
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                locale: {
+                    format: 'MM/DD/YYYY hh:mm A'
+                }
+            })
+            //Date range as a button
+            $('#daterange-btn').daterangepicker({
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function(start, end) {
+                    $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+            )
+
+            //Timepicker
+            $('#timepicker').datetimepicker({
+                format: 'LT'
+            })
+
+            //Bootstrap Duallistbox
+            $('.duallistbox').bootstrapDualListbox()
+
+            //Colorpicker
+            $('.my-colorpicker1').colorpicker()
+            //color picker with addon
+            $('.my-colorpicker2').colorpicker()
+
+            $('.my-colorpicker2').on('colorpickerChange', function(event) {
+                $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+            })
+
+            $("input[data-bootstrap-switch]").each(function() {
+                $(this).bootstrapSwitch('state', $(this).prop('checked'));
+            })
+
+        })
+        // // BS-Stepper Init
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     window.stepper = new Stepper(document.querySelector('.bs-stepper'))
+        // })
+
+        // // DropzoneJS Demo Code Start
+        // Dropzone.autoDiscover = false
+
+        // // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
+        // var previewNode = document.querySelector("#template")
+        // previewNode.id = ""
+        // var previewTemplate = previewNode.parentNode.innerHTML
+        // previewNode.parentNode.removeChild(previewNode)
+
+        // var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        //     url: "/target-url", // Set the url
+        //     thumbnailWidth: 80,
+        //     thumbnailHeight: 80,
+        //     parallelUploads: 20,
+        //     previewTemplate: previewTemplate,
+        //     autoQueue: false, // Make sure the files aren't queued until manually added
+        //     previewsContainer: "#previews", // Define the container to display the previews
+        //     clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
+        // })
+
+        // myDropzone.on("addedfile", function(file) {
+        //     // Hookup the start button
+        //     file.previewElement.querySelector(".start").onclick = function() {
+        //         myDropzone.enqueueFile(file)
+        //     }
+        // })
+
+        // // Update the total progress bar
+        // myDropzone.on("totaluploadprogress", function(progress) {
+        //     document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
+        // })
+
+        // myDropzone.on("sending", function(file) {
+        //     // Show the total progress bar when upload starts
+        //     document.querySelector("#total-progress").style.opacity = "1"
+        //     // And disable the start button
+        //     file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
+        // })
+
+        // // Hide the total progress bar when nothing's uploading anymore
+        // myDropzone.on("queuecomplete", function(progress) {
+        //     document.querySelector("#total-progress").style.opacity = "0"
+        // })
+
+        // // Setup the buttons for all transfers
+        // // The "add files" button doesn't need to be setup because the config
+        // // `clickable` has already been specified.
+        // document.querySelector("#actions .start").onclick = function() {
+        //     myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
+        // }
+        // document.querySelector("#actions .cancel").onclick = function() {
+        //     myDropzone.removeAllFiles(true)
+        // }
+
+
+
+        // DropzoneJS Demo Code End
+        </script>
+
+
+        <script>
+        $(function() {
+            $.validator.setDefaults({
+                submitHandler: function() {
+                    $("#myModal1").modal('show');
+
+                    $("#SubForm").click(function() {
+
+
+                        localStorage.ProjectCountryMapColors = 0;
+                        var radioButtonValue = $('input[name="mapcolortype"]:checked').val();
+                        console.log(radioButtonValue);
+
+                        localStorage.ProjectMapSingleOrMultipleColor = radioButtonValue;
+                        if (radioButtonValue == 2) {
+                            var temp = $('#exampleMultipleColorType1').val();
+                            for (var i = 0; i < temp.length; i++) {
+                                localStorage.setItem("PCML_" + (i + 1), JSON.stringify(temp[i]));
+                                localStorage.ProjectCountryMapColors = Number(localStorage.ProjectCountryMapColors) + 1;
+                            }
+                        } else {
+
+                            var switchBoxValue = $("#exampleSingleColorCheck1").prop("checked");
+                            localStorage.ProjectMapSingleColorFixedOrRange = switchBoxValue;
+                            var temp = $('#exampleSingleColorType1').val();
+
+                            localStorage.ProjectCountryMapColors = 1;
+                            localStorage.setItem("PCML_1", JSON.stringify(temp[0]));
+
+                            if (switchBoxValue == true) {
+                                localStorage.ProjectCountryMapColors = 2;
+                                localStorage.setItem("PCML_2", JSON.stringify(temp[0]));
+
+                            }
+                        }
+
+                        $("#myModal2").modal('show');
+                        //                        localStorage.ProjectCountryMapColors =  (temp+1);
+                    });
+                }
+            });
+            $('#quickForm').validate({
+                rules: {
+                    singleColorMap: {
+                        required: true
+                    },
+                    multipleColorMap: {
+                        required: true
+                    },
+
+                },
+                messages: {
+
+                    singleColorMap: {
+                        required: "Please Enter Color"
+                    },
+                    multipleColorMap: {
+                        required: "Please Enter Color"
+                    }
+
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+        </script>
+
+
+
+    </body>
+
+</html>

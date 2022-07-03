@@ -1,0 +1,515 @@
+﻿<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="~/ClientDashboard/index" class="brand-link">
+        <img src="~/CustomDesigning/dist/img/PMS_LogoT.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light"><b style="color:red">P</b><sub>roject</sub> <b style="color:red">M</b><sub>anagement</sub> <b style="color:red">S</b><sub>ystem</sub></span>
+    </a>
+   
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/@Session["Image"]" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">@Session["UserName"]</a>
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+                <li class="nav-item menu-open">
+                    <a href="~/ClientDashboard/index" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-plus"></i>
+                        <p>
+                            Customer Type
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/CustomerType/DisplayCustomerType" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Customer Type</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/CustomerType/AddCustomerType" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Customer Type</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-cogs"></i>
+                        <p>
+                            Project Type
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/ProjectType/DisplayProjectType" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Project Type</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/ProjectType/AddProjectType" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Project Type</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-line-chart"></i>
+                        <p>
+                            Project Status
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/ProjectStatus/DisplayProjectStatus" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Project Status</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/ProjectStatus/AddProjectStatus" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Project Status</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-bar-chart"></i>
+                        <p>
+                            Project Priority
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/ProjectPriority/DisplayProjectPriority" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Project Priority</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/ProjectPriority/AddProjectPriority" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Project Priority</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-product-hunt"></i>
+                        <p>
+                            Projects
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/Project/DisplayProject" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Project</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Project/AddProject" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Projects</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-globe"></i>
+                                <p>
+                                    Projects Map
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="~/Project/MapProject" class="nav-link">
+                                        <i class="far fa-play-circle nav-icon"></i>
+                                        <p>Projects Map Visualization</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="~/Project/MapProjectCustomization" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Projects Map Customization</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Customers
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/Customer/DisplayCustomer" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Customer</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Customer/AddCustomer" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Customer</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-globe-asia"></i>
+                                <p>
+                                    Customer Map
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="~/Customer/MapCustomer" class="nav-link">
+                                        <i class="far fa-play-circle nav-icon"></i>
+                                        <p> Map Visualization</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="~/Customer/MapCustomerCustomization" class="nav-link">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Map Customization</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-commenting-o"></i>
+                        <p>
+                            ChatBox
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/ClientMessages/ChatBox" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Customer User Chat</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-money"></i>
+                        <p>
+                            Daily Expense Type
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/DailyExpenseType/DisplayDailyExpenseType" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Daily Expense Type</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/DailyExpenseType/AddDailyExpenseType" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Daily Expense Type</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-book"></i>
+                        <p>
+                            Expense Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/DailyExpenseManagement/DisplayAllDailyExpenseData" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Expense Record</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/DailyExpenseManagement/AddDailyExpense" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Daily Expense </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/DailyExpenseManagement/DisplayAllDailyExpenseDataByAdvanceFilter" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Advance Search Daily Expense </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-cogs"></i>
+                        <p>
+                            Staff Category
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/StaffCategory/DisplayStaffCategory" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Staff Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/StaffCategory/AddStaffCategory" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Staff Category</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-cogs"></i>
+                        <p>
+                            Staff Designation
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/StaffDesignation/DisplayStaffDesignation" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Staff Designation</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/StaffDesignation/AddStaffDesignation" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Staff Designation</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-cogs"></i>
+                        <p>
+                            Team Wise Staff Designation
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/TeamWiseStaffDesignation/DisplayTeamWiseStaffDesignation" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Team Wise Staff Designation</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/TeamWiseStaffDesignation/AddTeamWiseStaffDesignation" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Team Wise Staff Designation</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-cogs"></i>
+                        <p>
+                            Staff
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/Staff/DisplayStaff" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Staff</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Staff/AddStaffInfo" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Staff</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-cogs"></i>
+                        <p>
+                            Gender
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/Gender/DisplayGender" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Gender</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/Gender/AddGender" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Gender</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-globe"></i>
+                        <p>
+                            Team Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="~/TeamManagement/AddTeam" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Display Team</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="~/TeamManagement/AddTeam" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Team</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item  menu-open">
+                    <a href="~/Authentication/LockScreen" class="nav-link bg-warning">
+                        <i class="nav-icon fa fa-lock"></i>
+                        <p>
+                            Lock Screen
+
+                        </p>
+                    </a>
+
+                </li>
+
+
+
+                <li class="nav-item menu-open ">
+                    <a href="~/Authentication/Logout" class="nav-link bg-danger">
+                        <i class="nav-icon fa fa-sign-out"></i>
+                        <p>
+                            Logout
+
+                        </p>
+                    </a>
+
+                </li>
+
+
+
+
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

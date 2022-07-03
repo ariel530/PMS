@@ -1,0 +1,207 @@
+﻿
+
+@model PMS.Models.DailyExpenseType
+@{
+    ViewBag.Title = "View Daily Expense Type";
+    ViewBag.Page = "Daily Expense Type";
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | @ViewBag.Title</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_ClientPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_ClientNavbar")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_ClientSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">@ViewBag.Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Title</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+
+
+
+
+
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- SELECT2 EXAMPLE -->
+
+                    @if (TempData["ResultStatus"] != null)
+                    {
+
+                        <div class="alert alert-warning alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-exclamation-triangle"></i>@TempData["ResultMessageTitle"].ToString()</h5>
+                            @TempData["ResultMessage"].ToString()
+                        </div>
+
+                    }
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">@ViewBag.Title</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form id="quickForm" action="InsertDailyExpenseTypeData">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleCountryName1">Expense Type Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa  fa-user-plus"></i></span>
+                                                </div>
+                                                <input type="text" name="dailyExpenseTypeName" class="form-control" id="exampleCountryName1" value="@Model.DailyExpenseTypeName" placeholder="Enter Expense Type  Name" readonly>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="customertypedescription">Expense Type Description</label>
+                                            <div class="input-group">
+                      
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-tasks"></i></span>
+                                                </div>
+                                                <textarea id="dailyExpensetypedescription" placeholder="Enter Expense Type Description" name="dailyExpensetypedescription" class="form-control" rows="4" readonly>@Model.DailyExpenseTypeDescription</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+                                @*<div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">@ViewBag.Title</button>
+                                    </div>*@
+                            </form>
+
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            @Html.Partial("_ClientAddUpdateViewCardFooter")
+
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_ClientFooter")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+
+    <script>
+
+
+
+
+
+        $(function () {
+            $.validator.setDefaults({
+                submitHandler: function (form) {
+
+                    form.submit();
+                }
+            });
+            $('#quickForm').validate({
+                rules: {
+                    dailyExpenseTypeName: {
+                        required: true,
+                    },
+
+                    dailyExpensetypedescription: {
+                        required: true,
+                    },
+
+
+                },
+                messages: {
+
+                    dailyExpenseTypeName: {
+                        required: "Please enter a expense type name",
+                    },
+
+                    dailyExpensetypedescription: {
+                        required: "Please enter expense type description",
+                    },
+
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

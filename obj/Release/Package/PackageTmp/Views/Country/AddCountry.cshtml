@@ -1,0 +1,248 @@
+﻿
+@{
+    ViewBag.Title = "AddCountry";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | Add Country</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_AdminPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_AdminNavbar")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_AdminSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Country</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Add Country v1</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+
+
+
+
+
+            <section class="content">
+                <div class="container-fluid">
+
+                    @if (TempData["ResultStatus"] != null)
+                    {
+
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fas fa-exclamation-triangle"></i>@TempData["ResultMessageTitle"].ToString()</h5>
+                        @TempData["ResultMessage"].ToString()
+                    </div>
+
+                    }
+
+                    <!-- SELECT2 EXAMPLE -->
+                    <div class="alert alert-danger alert-dismissible" id="alertresult">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5 id="alertstatus"><i class="icon fas fa-ban"></i> Alert!</h5>
+                        <p id="alertmessage">
+                            Danger alert preview. This alert is dismissable. A wonderful serenity has taken possession of my
+                            entire
+                            soul, like these sweet mornings of spring which I enjoy with my whole heart.
+                        </p>
+                    </div>
+
+
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Add Country</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form id="quickForm">
+                                <div class="card-body">
+
+
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleCountryCode1">Country Code </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                                </div>
+                                                <input type="text" id="exampleCountryCode1" name="countryCode" class="form-control" placeholder="Enter Country Code">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleCountryName1">Country Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-globe-asia"></i></span>
+                                                </div>
+                                                <input type="text" name="countryName" class="form-control" id="exampleCountryName1" placeholder="Enter Country Name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Add Country</button>
+                                </div>
+                            </form>
+
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                           @Html.Partial("_ClientAddUpdateViewCardFooter")
+                            
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_AdminFooter")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+
+    <script>
+
+
+        function InsertDataByAjax() {
+            var countryCode = $('[name="countryCode"]').val();
+            var countryName = $('[name="countryName"]').val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("InsertCountryDataByAjax")',
+                data: '{countryCode: ' + JSON.stringify(countryCode) + ',countryName: ' + JSON.stringify(countryName) + '}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (responseData) {
+                    if (responseData != null && responseData.InsertionResult != null) {
+                        var resultList = JSON.parse(responseData.InsertionResult);
+                        if (resultList[1] == "fail") {
+
+
+                            $("#alertmessage").text(resultList[0]);
+                            $("#alertstatus").text(resultList[2] + " Fail !");
+                            $("#alertresult").fadeIn(3000);
+
+                        }
+                        else {
+                            location.href = "DisplayCountry?resultMessage=" + resultList[0] + "&resultMessageTitle=" + resultList[2] + "&resultStatus=" + resultList[1];
+                        }
+
+
+                    }
+                    else {
+
+                    }
+                },
+                error: function () {
+                    alert("Error while insertion country");
+                }
+            });
+        }
+        $("#alertresult").hide();
+
+
+        $(function() {
+            $.validator.setDefaults({
+                submitHandler: function (form) {
+
+                    InsertDataByAjax();
+                }
+            });
+            $('#quickForm').validate({
+                rules: {
+                    countryName: {
+                        required: true,
+                    },
+                    countryCode: {
+                        required: true,
+                    },
+                },
+                messages: {
+
+                    countryName: {
+                        required: "Please enter a country name",
+                    },
+                    countryCode: {
+                        required: "Please enter a country code",
+                    },
+                },
+                errorElement: 'span',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewBag.Title = "Add Project Status";
+    ViewBag.Page = "Project Status";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | Add Project Status</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_ClientPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_ClientNavbar")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_ClientSidebar")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">@ViewBag.Page</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Title</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+
+
+                    @if (TempData["ResultStatus"] != null)
+                    {
+
+                        <div class="alert alert-warning alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fa fa-exclamation-triangle"></i>@TempData["ResultMessageTitle"].ToString()</h5>
+                            @TempData["ResultMessage"].ToString()
+                        </div>
+
+                    }
+
+                    <!-- SELECT2 EXAMPLE -->
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">@ViewBag.Title</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <form id="quickForm" action="InsertProjectStatusData">
+                                <div class="card-body">
+
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="examplestatusname">Project Status Name</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-line-chart"></i></span>
+                                                </div>
+                                                <input type="text" name="projectstatusname" class="form-control" id="examplestatusname" placeholder="Enter Project Status Name">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="projectstatusbackgroundcolor">Project Status Background Color</label>
+
+                                            <div class="input-group my-colorpicker2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-square"></i></span>
+                                                </div>
+
+                                                <input type="text" name="projectstatusbackgroundcolor" class="form-control" id="projectstatusbackgroundcolor" placeholder="Enter Project Status Background Color">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="projectstatustextcolor">Project Status Text Color</label>
+                                            <div class="input-group my-colorpicker3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-square"></i></span>
+                                                </div>
+                                                <input type="text" name="projectstatustextcolor" class="form-control" id="projectstatustextcolor" placeholder="Enter Project Status Text Color">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="exampleInputProjectPriority">Project Status Display As Working</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-superpowers"></i></span>
+                                                </div>
+                                                <select class="form-control custom-select projectpriority" name="projectstatusdisplayedmessage" id="exampleInputProjectPriority" style="width: 82%;">
+                                                    <option value="true" selected="selected">Yes, Displayed It as working</option>
+                                                    <option value="false">No, Dont Display</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label for="projectstatusdescription">Project Status Description</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-tasks"></i></span>
+                                                </div>
+                                                <textarea id="projectstatusdescription" placeholder="Enter Project Status Description" name="ProjectStatusDescription" class="form-control" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">@ViewBag.Title</button>
+                                </div>
+                            </form>
+
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <p><span class="text-red"><b> Note: </b> </span>The status name containing the keyword cancel (regardless of case) should be considered as canceled projects. </p>
+                            @Html.Partial("_ClientAddUpdateViewCardFooter")
+                            
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_ClientFooter")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+
+    <script>
+        
+        $(function () {
+            $.validator.setDefaults({
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+            $('#quickForm').validate({
+                rules: {
+                    projectstatusname: {
+                        required: true,
+                    },
+                    projectstatusbackgroundcolor: {
+                        required: true,
+                    },
+                    projectstatustextcolor: {
+                        required: true,
+                    },
+                    ProjectStatusDescription: {
+                        required: true,
+                    },
+
+                },
+                messages: {
+
+                    projectstatusname: {
+                        required: "Please Enter Project Status Name",
+                    },
+                    projectstatusbackgroundcolor: {
+                        required: "Please Enter Project Status BackGround Color",
+                    },
+                    projectstatustextcolor: {
+                        required: "Please Enter Project Status Text Color",
+                    },
+                    ProjectStatusDescription: {
+                        required: "Please Enter Project Status Description",
+                    },
+
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                }
+            });
+        });
+
+        $('.my-colorpicker2').colorpicker();
+        $('.my-colorpicker3').colorpicker();
+        $('.my-colorpicker2').on('colorpickerChange', function (event) {
+            $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+            });
+
+        $('.my-colorpicker3').on('colorpickerChange', function (event) {
+            $('.my-colorpicker3 .fa-square').css('color', event.color.toString());
+        });
+
+        $("#projectstatusbackgroundcolor").click(function () {
+            
+            $("#projectstatusbackgroundcolor-error").remove();
+        });
+
+        $("#projectstatustextcolor").click(function () {
+            $("#projectstatustextcolor-error").remove();
+        });
+
+
+    </script>
+
+
+
+</body>
+
+</html>

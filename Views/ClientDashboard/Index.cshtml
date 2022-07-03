@@ -1,0 +1,334 @@
+﻿@using PMS.DynamicBindingModels
+@model PMS.DynamicBindingModels.Client_Dashboard_Model
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS | @ViewBag.Title</title>
+    @Html.Partial("_AdminHeaderLinks")
+    <link href="~/CustomDesigning/dist/css/countdowntimer_style.css" rel="stylesheet" />
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        @Html.Partial("_ClientPreloader")
+
+        <!-- Navbar -->
+        @Html.Partial("_ClientNavbar")
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        @Html.Partial("_ClientSidebar")
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">@ViewBag.Title</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">@ViewBag.Title</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
+                    <div class="row">
+                        @*<div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>150</h3>
+
+                    <p>New Orders</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>*@
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>@ViewBag.TotalProject<sup style="font-size: 20px"></sup></h3>
+
+                                    <p>Total Projects</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="~/Project/DisplayProject" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>@ViewBag.TotalCustomer</h3>
+
+                                    <p>Customers</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="~/Customer/DisplayCustomer" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3>@ViewBag.TotalCancelProject</h3>
+
+                                    <p>Cancel Projects</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                                <a href="~/Project/DisplayProject" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-gradient-blue">
+                                <div class="inner">
+                                    <h3>@ViewBag.TotalStaff</h3>
+
+                                    <p>Total Staff</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion  ion-person"></i>
+                                </div>
+                                <a href="~/Staff/DisplayStaff" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+                    <div id="runingprojectslist">
+                        @{ string projectDateToPrint = "Not Enter Yet";
+                            int projectcounter = 1;
+                        }
+                        @foreach (Project_Info_Status_Priority_ForDashboard project_Info_Status_Priority_ForDashboard in Model.project_Info_Status_Priority_ForDashboards)
+                        {
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <h3 class="card-title">@project_Info_Status_Priority_ForDashboard.ProjectName</h3><br>
+                                        <small class="offset-3 offset-md-1 offset-sm-2">
+                                            (
+                                            <i id="actualdeliverytime-@projectcounter">
+                                                @{ if (project_Info_Status_Priority_ForDashboard.ActualDeliveryDateTime.HasValue)
+                                                    {
+                                                        @project_Info_Status_Priority_ForDashboard.ActualDeliveryDateTime.ToString()
+                                                    }
+                                                    else
+                                                    {
+                                                        @projectDateToPrint
+                                                    }
+                                                }
+                                                )
+                                            </i>
+                                        </small>
+                                    </div>
+                                </div>
+
+
+                                <!-- /.card-header -->
+
+
+                                <div class="card-body">
+
+                                    <div class="row">
+
+                                        <div class="row col-md-4">
+                                            <div class="form-group col-md-7 col-6 text-center">
+                                                <label for="">Customer Name</label>
+                                                <div class="">
+                                                    <span class="text-center" id="">@project_Info_Status_Priority_ForDashboard.ProjectCustomerId</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-5 col-6 text-center">
+                                                <label for="">Price</label>
+                                                <div class="">
+                                                    <span class="text-center" id="">$ @project_Info_Status_Priority_ForDashboard.ProjectEstimatedBudget</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group text-center col-md-2 col-6">
+                                            <label for="">Time Left</label>
+                                            <div class="text-center">
+                                                <div class="clockdiv" id="clockdiv-@projectcounter">
+
+                                                    <div class="text-center">
+                                                        <span class="days"></span>
+                                                        @*<div class="smalltext">Days</div>*@
+                                                    </div>
+                                                    <div>
+                                                        <span class="hours"></span>
+                                                        @*<div class="smalltext">Hours</div>*@
+                                                    </div>
+                                                    <div>
+                                                        <span class="minutes"></span>
+                                                        @*<div class="smalltext">Minutes</div>*@
+                                                    </div>
+                                                    <div>
+                                                        <span class="seconds"></span>
+                                                        @*<div class="smalltext">Seconds</div>*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-2 text-center col-6">
+                                            <label for="">Priority</label>
+                                            <div class="">
+                                                <span class="text-center badge" id="" style="background-color:@project_Info_Status_Priority_ForDashboard.ProjectPriorityBackGroundColor;color:@project_Info_Status_Priority_ForDashboard.ProjectPriorityTextColor">
+                                                    @project_Info_Status_Priority_ForDashboard.ProjectPriorityName
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-2 text-center col-6">
+                                            <label for="">Status</label>
+                                            <div class="text-center">
+                                                <span class="text-center badge" id="" style="background-color:@project_Info_Status_Priority_ForDashboard.ProjectStatusBackGroundColor;color:@project_Info_Status_Priority_ForDashboard.ProjectStatusTextColor">
+                                                    @project_Info_Status_Priority_ForDashboard.ProjectStatusName
+                                                </span>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group text-center col-md-1 col-6 ">
+                                            <label for="">View</label>
+                                            <div class="">
+                                                <span class="text-center" id=""><a href="~/Project/ViewProjectDetail/@project_Info_Status_Priority_ForDashboard.Id" style="color: black;"> <i class="fa fa-eye"></i></a></span>
+                                                <span class="text-center" id=""><a href="~/Project/UpdateProject/@project_Info_Status_Priority_ForDashboard.Id" style="color: black;"> <i class="fa fa-pencil"></i></a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <!-- /.card-body -->
+                                @*<div class="card-footer">
+                    <button type="submit" class="btn btn-primary">@ViewBag.Title</button>
+                </div>*@
+
+
+
+                                <!-- /.row -->
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    @Html.Partial("_ClientAddUpdateViewCardFooter")
+
+                                </div>
+                            </div>
+                            //  @projectcounter = projectcounter + 1;
+
+                            projectcounter++; 
+                        }
+
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        @Html.Partial("_ClientFooter")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- JavaScript Links -->
+    @Html.Partial("_AdminFooterLinks")
+    <script src="~/CustomDesigning/dist/js/countdowntimer_script.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            var counter = +$('#runingprojectslist')[0].childElementCount;
+
+            for (var i = 1; i <= counter; i++) {
+                var projectDate = $('#actualdeliverytime-' + i).html();
+                projectDate = projectDate.replaceAll("\n", "").replaceAll(")", "").trim();
+                var todayDate = new Date();
+                if (projectDate.indexOf('E') == -1) {
+
+                    if (Date.parse(todayDate) >= Date.parse(projectDate)) {
+                        console.log("Ente...r,,,");
+                        const clock = document.getElementById("clockdiv-" + i);
+                        const daysSpan = clock.querySelector('.days');
+                        const hoursSpan = clock.querySelector('.hours');
+                        const minutesSpan = clock.querySelector('.minutes');
+                        const secondsSpan = clock.querySelector('.seconds');
+
+                        daysSpan.innerHTML = "L";
+                        hoursSpan.innerHTML = "A";
+                        minutesSpan.innerHTML = "T";
+                        secondsSpan.innerHTML = "E";
+
+                        daysSpan.style.backgroundColor = "red";
+                        hoursSpan.style.backgroundColor = "red";
+                        minutesSpan.style.backgroundColor = "red";
+                        secondsSpan.style.backgroundColor = "red";
+
+                        daysSpan.style.color = "yellow";
+                        hoursSpan.style.color = "yellow";
+                        minutesSpan.style.color = "yellow";
+                        secondsSpan.style.color = "yellow";
+                    }
+                    else {
+                        initializeClock('clockdiv-' + i, projectDate);
+                    }
+                }
+                else {
+                    $('#clockdiv-'+i+' .days').html("-");
+                    $('#clockdiv-' + i +' .hours').html("-");
+                    $('#clockdiv-' + i +' .minutes').html("-");
+                    $('#clockdiv-' + i +' .seconds').html("-");
+                }
+            }
+        });
+    </script>
+
+
+</body>
+</html>
+

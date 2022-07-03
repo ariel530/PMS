@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "LockScreen";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PMS| Lockscreen</title>
+
+    @Html.Partial("_AdminHeaderLinks")
+
+</head>
+<body class="hold-transition lockscreen">
+    <!-- Automatic element centering -->
+    <div class="lockscreen-wrapper">
+        <div class="lockscreen-logo">
+            <a href=""><b>PMS</b> APP</a>
+        </div>
+        <!-- User name -->
+        <div class="lockscreen-name">@Session["CurrentName"]</div>
+
+        <!-- START LOCK SCREEN ITEM -->
+        <div class="lockscreen-item">
+            <!-- lockscreen image -->
+            <div class="lockscreen-image">
+                <img src="~/@Session["Image"]" alt="User Image">
+            </div>
+            <!-- /.lockscreen-image -->
+            <!-- lockscreen credentials (contains the form) -->
+            <form class="lockscreen-credentials" onsubmit="return submitForm()">
+                <div class="input-group">
+                    <input type="password" id="password" class="form-control"  placeholder="password">
+
+                    <div class="input-group-append">
+                        <button type="button" onclick="submitForm()" class="btn">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.lockscreen credentials -->
+
+        </div>
+        <!-- /.lockscreen-item -->
+        <div class="help-block text-center">
+            Enter your password to retrieve your session
+        </div>
+        <div class="text-center">
+            <a href="~/Authentication/Logout">Or sign in as a different user</a>
+        </div>
+        <div class="lockscreen-footer text-center">
+            Copyright &copy; 2021 <b><a href="" class="text-black"><b style="color:red">P</b><sub>roject</sub> <b style="color:red">M</b><sub>anagement</sub> <b style="color:red">S</b><sub>ystem</sub></a></b><br>
+            All rights reserved
+        </div>
+    </div>
+    <!-- /.center -->
+    <!-- jQuery -->
+    @Html.Partial("_AdminFooterLinks")
+
+    <script>
+        function submitForm() {
+            var password = $("#password").val();
+            $.post("/Authentication/ValidateLockScreenUsingAjax", { password: password }, function (result) {
+
+                if (result == false) {
+                    toastr.error("Invalid <span style='color: blue;'> Password </span>.");
+                } else {
+                    location.href = result;
+                }
+            });
+            return false;
+        }
+
+    </script>
+
+</body>
+</html>
+
